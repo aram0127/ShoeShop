@@ -10,24 +10,24 @@ router.get("/", async (req, res) => {
     // DB 쿼리 필터 객체 생성
     let filter = {};
 
-    // [필터 1] 카테고리 (단일 선택)
+    // [필터 1] 카테고리
     if (category) {
       filter.categories = category;
     }
 
-    // [필터 2] 소재 (OR 조건)
+    // [필터 2] 소재
     if (materials) {
       const materialList = materials.split(",");
-      filter.materials = { $in: materialList };
+      filter.material = { $in: materialList };
     }
 
-    // [필터 3] 사이즈 (OR 조건)
+    // [필터 3] 사이즈
     if (sizes) {
       const sizeList = sizes.split(",").map(Number);
       filter.availableSizes = { $in: sizeList };
     }
 
-    // [필터 4] 신제품 (1달 이내)
+    // [필터 4] 신제품
     if (isNew === "true") {
       const oneMonthAgo = new Date();
       oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);

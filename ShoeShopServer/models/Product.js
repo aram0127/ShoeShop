@@ -13,12 +13,10 @@ const productSchema = new mongoose.Schema(
       },
     ],
 
-    materials: [
-      {
-        type: String,
-        enum: ["tree", "cotton", "wool", "canvas", "leather"],
-      },
-    ],
+    material: {
+      type: String,
+      enum: ["wool", "tree", "cotton", "canvas", "leather"],
+    },
 
     availableSizes: [
       {

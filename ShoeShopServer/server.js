@@ -36,7 +36,7 @@ app.use(express.static("public"));
 const maxAge = 1000 * 60 * 60;
 app.use(
   session({
-    secret: "shoes_shop_key",
+    secret: "shoe_shop_key",
     resave: false,
     saveUninitialized: true,
     store: new MemoryStore({ checkPeriod: maxAge }),

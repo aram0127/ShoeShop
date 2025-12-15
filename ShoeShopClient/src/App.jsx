@@ -12,6 +12,7 @@ import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/AdminPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
 
         {/* ThreeCardsSection 추가: 모든 페이지 하단에 표시 */}

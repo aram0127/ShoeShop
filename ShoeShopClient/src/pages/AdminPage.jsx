@@ -3,6 +3,14 @@ import styled, { css } from "styled-components";
 import axios from "axios";
 import { useAppContext } from "../context/App.context";
 
+// 서버 설정에 맞춘 상수 정의
+const POSSIBLE_CATEGORIES = [
+  { value: "lifestyle", label: "라이프 스타일" },
+  { value: "slipon", label: "슬립온" },
+];
+
+const POSSIBLE_SIZES = [250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300];
+
 const AdminContainer = styled.div`
   max-width: 1400px;
   margin: 40px auto;
@@ -43,24 +51,61 @@ const ProductTable = styled.table`
     padding: 10px;
     text-align: center;
     font-size: 14px;
+    vertical-align: middle;
   }
 
   th {
     background-color: #f0f0f0;
   }
 
-  input {
-    width: 80px;
+  /* 테이블 내 입력 필드 스타일 */
+  input[type="number"] {
+    width: 60px;
     padding: 5px;
     text-align: center;
   }
-  select {
-    padding: 5px;
+
+  input[type="date"] {
+    padding: 4px;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block; /* 날짜 필드는 줄바꿈 */
+    width: 100%;
+    box-sizing: border-box;
+  }
+`;
+
+// 체크박스 그룹 컨테이너 (테이블 셀 내부용)
+const CheckboxGroupCell = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 300px; /* 너무 넓어지지 않게 제한 */
+  margin: 0 auto;
+
+  label {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    background: #f9f9f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+
+    input {
+      margin-right: 4px;
+    }
+
+    &:hover {
+      background: #eef;
+    }
   }
 `;
 
 const FormContainer = styled.form`
-  max-width: 600px;
+  max-width: 800px; /* 폼 너비 확장 */
   padding: 30px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -85,7 +130,9 @@ const FormContainer = styled.form`
     font-size: 14px;
   }
 
-  input,
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
   select,
   textarea {
     padding: 10px;
@@ -94,19 +141,54 @@ const FormContainer = styled.form`
     font-size: 14px;
   }
 
+  /* 폼 내부 체크박스 그룹 */
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #fafafa;
+
+    label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+
   button {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
+    padding: 15px;
     background-color: #212a2f;
     color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     &:hover {
       background-color: #000;
     }
   }
 `;
 
+// 날짜 포맷팅 유틸리티 (YYYY-MM-DD) input value용
+const formatDateForInput = (dateString) => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  return date.toISOString().split("T")[0];
+};
+
 // ------------------------------------------------
-// Tab 1: 상품 관리
+// Tab 1: 상품 관리 (수정)
 // ------------------------------------------------
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
@@ -116,14 +198,17 @@ const ProductManagement = () => {
     setLoading(true);
     try {
       const response = await axios.get("/api/products");
-
       // MongoDB ID(_id) 기준으로 정렬 (등록순)
-      // a.id와 b.id는 문자열이므로 localeCompare 사용
       const sortedData = response.data.sort((a, b) => a.id.localeCompare(b.id));
 
+      // 데이터 가공
       const mappedProducts = sortedData.map((p) => ({
         ...p,
-        sizesInput: p.availableSizes.join(", "),
+        // 가용 사이즈 배열 복사
+        selectedSizes: p.availableSizes || [],
+        // 날짜 처리
+        saleStartDateInput: formatDateForInput(p.saleStartDate),
+        saleEndDateInput: formatDateForInput(p.saleEndDate),
       }));
       setProducts(mappedProducts);
     } catch (err) {
@@ -144,12 +229,24 @@ const ProductManagement = () => {
     );
   };
 
-  const handleSave = async (product) => {
-    const newSizes = product.sizesInput
-      .split(",")
-      .map((s) => parseInt(s.trim()))
-      .filter((s) => !isNaN(s));
+  // 사이즈 체크박스 핸들러
+  const handleSizeChange = (productId, size, isChecked) => {
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id !== productId) return p;
+        const currentSizes = p.selectedSizes || [];
+        let newSizes;
+        if (isChecked) {
+          newSizes = [...currentSizes, size].sort((a, b) => a - b);
+        } else {
+          newSizes = currentSizes.filter((s) => s !== size);
+        }
+        return { ...p, selectedSizes: newSizes };
+      })
+    );
+  };
 
+  const handleSave = async (product) => {
     const newDiscount = Math.min(
       100,
       Math.max(0, parseInt(product.discountRate) || 0)
@@ -159,13 +256,15 @@ const ProductManagement = () => {
       await axios.put(
         `/api/admin/products/${product.id}`,
         {
-          availableSizes: newSizes,
+          availableSizes: product.selectedSizes,
           discountRate: newDiscount,
+          saleStartDate: product.saleStartDateInput || null,
+          saleEndDate: product.saleEndDateInput || null,
         },
         { withCredentials: true }
       );
       alert(`${product.name} 상품 정보가 업데이트되었습니다.`);
-      fetchProducts();
+      fetchProducts(); // 목록 갱신
     } catch (err) {
       console.error("수정 실패:", err);
       alert("상품 수정 중 오류가 발생했습니다.");
@@ -176,16 +275,25 @@ const ProductManagement = () => {
 
   return (
     <div>
-      <h3>상품 수정 (가용 사이즈 및 할인율)</h3>
+      <h3>상품 수정 (가용 사이즈 및 할인 정책)</h3>
       <ProductTable>
+        <colgroup>
+          <col width="5%" />
+          <col width="15%" />
+          <col width="10%" />
+          <col width="20%" />
+          <col width="10%" />
+          <col width="30%" />
+          <col width="10%" />
+        </colgroup>
         <thead>
           <tr>
             <th>No.</th>
             <th>상품명</th>
             <th>원가</th>
-            <th>할인율 (%)</th>
-            <th>판매가 (예상)</th>
-            <th>가용 사이즈 (쉼표 구분)</th>
+            <th>할인 설정 (할인율/기간)</th>
+            <th>판매가</th>
+            <th>가용 사이즈</th>
             <th>관리</th>
           </tr>
         </thead>
@@ -196,19 +304,62 @@ const ProductManagement = () => {
               <td>{product.name}</td>
               <td>{product.price.toLocaleString()}원</td>
               <td>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={product.discountRate || 0}
-                  onChange={(e) =>
-                    handleInputChange(
-                      product.id,
-                      "discountRate",
-                      e.target.value
-                    )
-                  }
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={product.discountRate || 0}
+                      onChange={(e) =>
+                        handleInputChange(
+                          product.id,
+                          "discountRate",
+                          e.target.value
+                        )
+                      }
+                    />
+                    <span>%</span>
+                  </div>
+                  {/* 할인 기간 설정 추가 */}
+                  <input
+                    type="date"
+                    placeholder="시작일"
+                    value={product.saleStartDateInput}
+                    onChange={(e) =>
+                      handleInputChange(
+                        product.id,
+                        "saleStartDateInput",
+                        e.target.value
+                      )
+                    }
+                  />
+                  <input
+                    type="date"
+                    placeholder="종료일"
+                    value={product.saleEndDateInput}
+                    onChange={(e) =>
+                      handleInputChange(
+                        product.id,
+                        "saleEndDateInput",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
               </td>
               <td>
                 {(
@@ -218,17 +369,35 @@ const ProductManagement = () => {
                 원
               </td>
               <td>
-                <input
-                  type="text"
-                  value={product.sizesInput}
-                  onChange={(e) =>
-                    handleInputChange(product.id, "sizesInput", e.target.value)
-                  }
-                  style={{ width: "200px", textAlign: "left" }}
-                />
+                <CheckboxGroupCell>
+                  {POSSIBLE_SIZES.map((size) => (
+                    <label key={size}>
+                      <input
+                        type="checkbox"
+                        checked={product.selectedSizes.includes(size)}
+                        onChange={(e) =>
+                          handleSizeChange(product.id, size, e.target.checked)
+                        }
+                      />
+                      {size}
+                    </label>
+                  ))}
+                </CheckboxGroupCell>
               </td>
               <td>
-                <button onClick={() => handleSave(product)}>저장</button>
+                <button
+                  onClick={() => handleSave(product)}
+                  style={{
+                    padding: "5px 10px",
+                    cursor: "pointer",
+                    backgroundColor: "#333",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "4px",
+                  }}
+                >
+                  저장
+                </button>
               </td>
             </tr>
           ))}
@@ -239,17 +408,19 @@ const ProductManagement = () => {
 };
 
 // ------------------------------------------------
-// Tab 2: 상품 등록
+// Tab 2: 상품 등록 (수정)
 // ------------------------------------------------
 const ProductRegistration = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     price: "",
-    categories: "lifestyle",
+    selectedCategories: [], // 체크박스용 배열
     materials: "wool",
-    availableSizes: "250, 260, 270, 280",
+    selectedSizes: [], // 체크박스용 배열
     discountRate: 0,
+    saleStartDate: "",
+    saleEndDate: "",
     photo: null,
   });
 
@@ -262,6 +433,28 @@ const ProductRegistration = () => {
     }
   };
 
+  // 카테고리 체크박스 변경 핸들러
+  const handleCategoryChange = (value, isChecked) => {
+    setFormData((prev) => {
+      const current = prev.selectedCategories;
+      const updated = isChecked
+        ? [...current, value]
+        : current.filter((item) => item !== value);
+      return { ...prev, selectedCategories: updated };
+    });
+  };
+
+  // 사이즈 체크박스 변경 핸들러
+  const handleSizeChange = (value, isChecked) => {
+    setFormData((prev) => {
+      const current = prev.selectedSizes;
+      const updated = isChecked
+        ? [...current, value].sort((a, b) => a - b)
+        : current.filter((item) => item !== value);
+      return { ...prev, selectedSizes: updated };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -270,14 +463,33 @@ const ProductRegistration = () => {
       return;
     }
 
+    if (formData.selectedCategories.length === 0) {
+      alert("최소 하나의 카테고리를 선택해야 합니다.");
+      return;
+    }
+
+    if (formData.selectedSizes.length === 0) {
+      alert("최소 하나의 사이즈를 선택해야 합니다.");
+      return;
+    }
+
     const data = new FormData();
     data.append("name", formData.name);
     data.append("description", formData.description);
     data.append("price", formData.price);
-    data.append("categories", formData.categories);
+
+    // 서버가 comma-separated string을 기대하므로 join
+    data.append("categories", formData.selectedCategories.join(","));
+    data.append("availableSizes", formData.selectedSizes.join(","));
+
     data.append("materials", formData.materials);
-    data.append("availableSizes", formData.availableSizes);
     data.append("discountRate", formData.discountRate);
+
+    // 날짜가 있다면 추가
+    if (formData.saleStartDate)
+      data.append("saleStartDate", formData.saleStartDate);
+    if (formData.saleEndDate) data.append("saleEndDate", formData.saleEndDate);
+
     data.append("images", formData.photo);
 
     try {
@@ -286,14 +498,18 @@ const ProductRegistration = () => {
         withCredentials: true,
       });
       alert("상품이 성공적으로 등록되었습니다.");
+
+      // 폼 초기화
       setFormData({
         name: "",
         description: "",
         price: "",
-        categories: "lifestyle",
+        selectedCategories: [],
         materials: "wool",
-        availableSizes: "250, 260, 270, 280",
+        selectedSizes: [],
         discountRate: 0,
+        saleStartDate: "",
+        saleEndDate: "",
         photo: null,
       });
     } catch (err) {
@@ -325,17 +541,27 @@ const ProductRegistration = () => {
           rows="3"
         />
       </p>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <p style={{ flex: 1 }}>
-          <label>카테고리 (쉼표 구분)</label>
-          <input
-            type="text"
-            name="categories"
-            value={formData.categories}
-            onChange={handleChange}
-            placeholder="예: lifestyle, slipon"
-          />
-        </p>
+
+      {/* 카테고리 체크박스 */}
+      <p>
+        <label>카테고리</label>
+        <div className="checkbox-group">
+          {POSSIBLE_CATEGORIES.map((cat) => (
+            <label key={cat.value}>
+              <input
+                type="checkbox"
+                checked={formData.selectedCategories.includes(cat.value)}
+                onChange={(e) =>
+                  handleCategoryChange(cat.value, e.target.checked)
+                }
+              />
+              {cat.label}
+            </label>
+          ))}
+        </div>
+      </p>
+
+      <div style={{ display: "flex", gap: "20px" }}>
         <p style={{ flex: 1 }}>
           <label>소재</label>
           <select
@@ -350,8 +576,6 @@ const ProductRegistration = () => {
             <option value="leather">Leather</option>
           </select>
         </p>
-      </div>
-      <div style={{ display: "flex", gap: "10px" }}>
         <p style={{ flex: 1 }}>
           <label>가격 (원)</label>
           <input
@@ -362,28 +586,75 @@ const ProductRegistration = () => {
             required
           />
         </p>
-        <p style={{ flex: 1 }}>
-          <label>할인율 (%)</label>
-          <input
-            type="number"
-            name="discountRate"
-            min="0"
-            max="100"
-            value={formData.discountRate}
-            onChange={handleChange}
-          />
-        </p>
       </div>
+
+      {/* 할인 및 기간 설정 */}
+      <div
+        style={{
+          padding: "15px",
+          backgroundColor: "#f9f9f9",
+          borderRadius: "8px",
+          marginBottom: "15px",
+        }}
+      >
+        <label style={{ display: "block", marginBottom: "10px" }}>
+          할인 설정
+        </label>
+        <div style={{ display: "flex", gap: "20px", alignItems: "flex-end" }}>
+          <div style={{ flex: 1 }}>
+            <label style={{ fontSize: "12px", color: "#666" }}>
+              할인율 (%)
+            </label>
+            <input
+              type="number"
+              name="discountRate"
+              min="0"
+              max="100"
+              value={formData.discountRate}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ flex: 1 }}>
+            <label style={{ fontSize: "12px", color: "#666" }}>시작일</label>
+            <input
+              type="date"
+              name="saleStartDate"
+              value={formData.saleStartDate}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ flex: 1 }}>
+            <label style={{ fontSize: "12px", color: "#666" }}>종료일</label>
+            <input
+              type="date"
+              name="saleEndDate"
+              value={formData.saleEndDate}
+              onChange={handleChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 사이즈 체크박스 */}
       <p>
-        <label>가용 사이즈 (쉼표로 구분, 예: 250, 260)</label>
-        <input
-          type="text"
-          name="availableSizes"
-          value={formData.availableSizes}
-          onChange={handleChange}
-          required
-        />
+        <label>가용 사이즈</label>
+        <div className="checkbox-group">
+          {POSSIBLE_SIZES.map((size) => (
+            <label key={size}>
+              <input
+                type="checkbox"
+                checked={formData.selectedSizes.includes(size)}
+                onChange={(e) => handleSizeChange(size, e.target.checked)}
+              />
+              {size}
+            </label>
+          ))}
+        </div>
       </p>
+
       <p>
         <label>상품 이미지 (필수)</label>
         <input type="file" name="photo" onChange={handleChange} required />
@@ -506,7 +777,7 @@ const SalesReport = () => {
         <ProductTable>
           <thead>
             <tr>
-              <th>순위</th>
+              <th>No.</th>
               <th>상품명</th>
               <th>판매 수량</th>
               <th>총 매출</th>

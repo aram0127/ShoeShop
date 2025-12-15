@@ -34,7 +34,11 @@ const Header = ({ onCartClick }) => {
 
   const handleUserIconClick = () => {
     if (user) {
-      navigate("/mypage");
+      if (user.role === "admin") {
+        navigate("/admin"); // 관리자라면 관리자 페이지로 이동
+      } else {
+        navigate("/mypage"); // 일반 고객이라면 마이페이지로 이동
+      }
     } else {
       navigate("/login");
     }
@@ -110,7 +114,7 @@ const Header = ({ onCartClick }) => {
                 fontWeight: "bold",
               }}
             >
-              {user.name}님
+              {user.name}님{user.role === "admin" ? "(관리자)" : ""}
             </span>
             <span
               onClick={logout}

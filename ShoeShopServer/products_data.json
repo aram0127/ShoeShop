@@ -2,8 +2,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa786"
   },
-  "name": "라이프 스타일 신발 1",
-  "description": "라이프 스타일 신발 1입니다.",
+  "name": "라이프 스타일 울 신발 1",
+  "description": "라이프 스타일 울 신발 1입니다.",
   "price": 90000,
   "categories": [
     "lifestyle"
@@ -11,19 +11,20 @@
   "material": "wool",
   "availableSizes": [
     250,
-    285,
+    255,
+    260,
     275,
     280,
+    285,
     290,
-    260,
-    255
+    295
   ],
   "images": [
     "lifestyle_1_1.jpg",
     "lifestyle_1_2.jpg"
   ],
   "discountRate": 0,
-  "salesCount": 304,
+  "salesCount": 306,
   "createdAt": {
     "$date": "2025-12-05T15:20:38.601Z"
   },
@@ -35,8 +36,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa787"
   },
-  "name": "라이프 스타일 신발 2",
-  "description": "라이프 스타일 신발 2입니다.",
+  "name": "라이프 스타일 캔버스 신발 2",
+  "description": "라이프 스타일 캔버스 신발 2입니다.",
   "price": 130000,
   "categories": [
     "lifestyle"
@@ -72,8 +73,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa788"
   },
-  "name": "라이프 스타일 신발 3",
-  "description": "라이프 스타일 신발 3입니다.",
+  "name": "라이프 스타일 가죽 신발 3",
+  "description": "라이프 스타일 가죽 신발 3입니다.",
   "price": 90000,
   "categories": [
     "lifestyle"
@@ -90,7 +91,7 @@
     "lifestyle_3_2.jpg"
   ],
   "discountRate": 12,
-  "salesCount": 59,
+  "salesCount": 61,
   "createdAt": {
     "$date": "2025-12-05T15:20:38.601Z"
   },
@@ -106,8 +107,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa789"
   },
-  "name": "라이프 스타일 신발 4",
-  "description": "라이프 스타일 신발 4입니다.",
+  "name": "라이프 스타일 울 신발 4",
+  "description": "라이프 스타일 울 신발 4입니다.",
   "price": 150000,
   "categories": [
     "lifestyle"
@@ -144,8 +145,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78a"
   },
-  "name": "라이프 스타일 신발 5",
-  "description": "라이프 스타일 신발 5입니다.",
+  "name": "라이프 스타일 캔버스 신발 5",
+  "description": "라이프 스타일 캔버스 신발 5입니다.",
   "price": 90000,
   "categories": [
     "lifestyle"
@@ -166,7 +167,7 @@
     "lifestyle_5_2.jpg"
   ],
   "discountRate": 0,
-  "salesCount": 238,
+  "salesCount": 239,
   "createdAt": {
     "$date": "2025-12-05T15:20:38.601Z"
   },
@@ -178,8 +179,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78b"
   },
-  "name": "라이프 스타일 신발 6",
-  "description": "라이프 스타일 신발 6입니다.",
+  "name": "라이프 스타일 트리 신발 6",
+  "description": "라이프 스타일 트리 신발 6입니다.",
   "price": 100000,
   "categories": [
     "lifestyle"
@@ -208,8 +209,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78c"
   },
-  "name": "라이프 스타일 신발 7",
-  "description": "라이프 스타일 신발 7입니다.",
+  "name": "라이프 스타일 울 신발 7",
+  "description": "라이프 스타일 울 신발 7입니다.",
   "price": 140000,
   "categories": [
     "lifestyle"
@@ -241,8 +242,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78d"
   },
-  "name": "라이프 스타일 신발 8",
-  "description": "라이프 스타일 신발 8입니다.",
+  "name": "라이프 스타일 트리 신발 8",
+  "description": "라이프 스타일 트리 신발 8입니다.",
   "price": 150000,
   "categories": [
     "lifestyle"
@@ -277,8 +278,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78e"
   },
-  "name": "라이프 스타일 신발 9",
-  "description": "라이프 스타일 신발 9입니다.",
+  "name": "라이프 스타일 면 신발 9",
+  "description": "라이프 스타일 면 신발 9입니다.",
   "price": 80000,
   "categories": [
     "lifestyle"
@@ -307,8 +308,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa78f"
   },
-  "name": "라이프 스타일 신발 10",
-  "description": "라이프 스타일 신발 10입니다.",
+  "name": "라이프 스타일 트리 신발 10",
+  "description": "라이프 스타일 트리 신발 10입니다.",
   "price": 150000,
   "categories": [
     "lifestyle"
@@ -341,8 +342,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa790"
   },
-  "name": "슬립온 신발 1",
-  "description": "슬립온 신발 1입니다.",
+  "name": "슬립온 울 신발 1",
+  "description": "슬립온 울 신발 1입니다.",
   "price": 80000,
   "categories": [
     "slipon"
@@ -373,8 +374,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa791"
   },
-  "name": "슬립온 신발 2",
-  "description": "슬립온 신발 2입니다.",
+  "name": "슬립온 트리 신발 2",
+  "description": "슬립온 트리 신발 2입니다.",
   "price": 70000,
   "categories": [
     "slipon"
@@ -412,8 +413,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa792"
   },
-  "name": "슬립온 신발 3",
-  "description": "슬립온 신발 3입니다.",
+  "name": "슬립온 트리 신발 3",
+  "description": "슬립온 트리 신발 3입니다.",
   "price": 80000,
   "categories": [
     "slipon"
@@ -442,8 +443,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa793"
   },
-  "name": "슬립온 신발 4",
-  "description": "슬립온 신발 4입니다.",
+  "name": "슬립온 울 신발 4",
+  "description": "슬립온 울 신발 4입니다.",
   "price": 100000,
   "categories": [
     "slipon"
@@ -478,8 +479,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa794"
   },
-  "name": "슬립온 신발 5",
-  "description": "슬립온 신발 5입니다.",
+  "name": "슬립온 울 신발 5",
+  "description": "슬립온 울 신발 5입니다.",
   "price": 110000,
   "categories": [
     "slipon"
@@ -508,8 +509,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa795"
   },
-  "name": "슬립온 신발 6",
-  "description": "슬립온 신발 6입니다.",
+  "name": "슬립온 트리 신발 6",
+  "description": "슬립온 트리 신발 6입니다.",
   "price": 60000,
   "categories": [
     "slipon"
@@ -544,8 +545,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa796"
   },
-  "name": "슬립온 신발 7",
-  "description": "슬립온 신발 7입니다.",
+  "name": "슬립온 트리 신발 7",
+  "description": "슬립온 트리 신발 7입니다.",
   "price": 80000,
   "categories": [
     "slipon"
@@ -577,8 +578,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa797"
   },
-  "name": "슬립온 신발 8",
-  "description": "슬립온 신발 8입니다.",
+  "name": "슬립온 울 신발 8",
+  "description": "슬립온 울 신발 8입니다.",
   "price": 110000,
   "categories": [
     "slipon"
@@ -614,8 +615,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa798"
   },
-  "name": "슬립온 신발 9",
-  "description": "슬립온 신발 9입니다.",
+  "name": "슬립온 트리 신발 9",
+  "description": "슬립온 트리 신발 9입니다.",
   "price": 100000,
   "categories": [
     "slipon"
@@ -647,8 +648,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa799"
   },
-  "name": "슬립온 신발 10",
-  "description": "슬립온 신발 10입니다.",
+  "name": "슬립온 울 신발 10",
+  "description": "슬립온 울 신발 10입니다.",
   "price": 90000,
   "categories": [
     "slipon"
@@ -684,8 +685,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa79a"
   },
-  "name": "하이브리드 신발 1",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 1입니다.",
+  "name": "하이브리드 트리 신발 1",
+  "description": "라이프 스타일과 슬립온을 동시에 갖춘 트리 신발 1입니다.",
   "price": 170000,
   "categories": [
     "lifestyle",
@@ -723,8 +724,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa79b"
   },
-  "name": "하이브리드 신발 2",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 2입니다.",
+  "name": "하이브리드 트리 신발 2",
+  "description": "라이프 스타일과 슬립온을 동시에 갖춘 트리 신발 2입니다.",
   "price": 100000,
   "categories": [
     "lifestyle",
@@ -755,8 +756,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa79c"
   },
-  "name": "하이브리드 신발 3",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 3입니다.",
+  "name": "하이브리드 울 신발 3",
+  "description": "라이프 스타일과 슬립온을 동시에 갖춘 울 신발 3입니다.",
   "price": 100000,
   "categories": [
     "lifestyle",
@@ -793,8 +794,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa79d"
   },
-  "name": "하이브리드 신발 4",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 4입니다.",
+  "name": "하이브리드 울 신발 4",
+  "description": "라이프 스타일과 슬립온을 동시에 갖춘 울 신발 4입니다.",
   "price": 150000,
   "categories": [
     "lifestyle",
@@ -831,8 +832,8 @@
   "_id": {
     "$oid": "6942ef74162c5601435aa79e"
   },
-  "name": "하이브리드 신발 5",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 5입니다.",
+  "name": "하이브리드 울 신발 5",
+  "description": "라이프 스타일과 슬립온을 동시에 갖춘 울 신발 5입니다.",
   "price": 150000,
   "categories": [
     "lifestyle",

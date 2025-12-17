@@ -328,6 +328,7 @@ export const ProductCard = styled.div`
     padding: 5px 10px;
     font-size: 12px;
     font-weight: bold;
+    z-index: 10;
   }
 `;
 

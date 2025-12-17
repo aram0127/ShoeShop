@@ -8,7 +8,7 @@ import {
   SubMenuWrapper,
   SubMenuContainer,
   SubMenuColumn,
-  SubMenuTitle, // 👈 추가된 컴포넌트
+  SubMenuTitle, 
   SubMenuLink,
 } from "./Header.styled";
 

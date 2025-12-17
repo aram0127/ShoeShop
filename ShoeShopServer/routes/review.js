@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Review = require("../models/Review");
+const Order = require("../models/Order");
 
 // 리뷰 작성 (POST /api/reviews)
 router.post("/", async (req, res) => {

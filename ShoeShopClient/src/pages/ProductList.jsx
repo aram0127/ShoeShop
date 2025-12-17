@@ -1,5 +1,6 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { mockProducts, mockFilters } from "../mockData"; // 추가된 mockData 파일 사용
+import React, { useState, useMemo, useCallback, useEffect } from "react";
+// mockData에서 mockProducts는 제거하고, 스타일과 기본 아이콘 등은 그대로 사용
+import { mockFilters } from "../mockData";
 import {
   ProductListContainer,
   TitleBar,
@@ -22,24 +23,53 @@ import {
   FilterLabel,
   RemoveButton,
   ClearFiltersButton,
-  // resetFilters,
   ProductInfoWrapper,
   CollectionMenuContainer,
-  // SizeOverlay,
   SizeItem,
-} from "./ProductList.styled"; // 추가된 styled component 파일 사용
-import { Link } from "react-router-dom"; // 상세 페이지 이동을 위해 Link 추가
+} from "./ProductList.styled";
+import { Link } from "react-router-dom";
 
-// PathChildren 필터 키 목록 (CollectionMenu와 ProductList에서 사용)
+// ------------------------------------------------
+// [서버 스펙과 동기화된 정적 필터 옵션]
+// ------------------------------------------------
+const SERVER_FILTER_OPTIONS = {
+  // 서버 Product.js의 availableSizes: 250 ~ 300
+  sizes: [250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300].map(
+    (size) => ({ value: size.toString(), label: size.toString() })
+  ),
+
+  // 서버 Product.js의 material: wool, tree, cotton, canvas, leather
+  materials: [
+    { value: "tree", label: "가볍고 시원한 Tree" }, // 나무 섬유
+    { value: "cotton", label: "면" },
+    { value: "wool", label: "부드럽고 따뜻한 Wool" },
+    { value: "canvas", label: "캔버스" },
+    { value: "leather", label: "가죽" }, // 사탕수수 대신 서버 스펙인 leather 사용
+  ],
+
+  // 정렬 옵션 (클라이언트에서 처리)
+  sortOptions: [
+    { value: "recommend", label: "추천순" },
+    { value: "sales_high", label: "판매순" },
+    { value: "price_low", label: "가격 낮은순" },
+    { value: "price_high", label: "가격 높은순" },
+    { value: "newest", label: "최신 등록순" },
+  ],
+};
+
+// PathChildren 필터 키 목록
 const PATH_CHILD_FILTER_KEYS = ["new_products", "lifestyle", "sale", "slip_on"];
 
 // ------------------------------------------------
 // Helper Components
 // ------------------------------------------------
 
-// 상품 경로 메뉴
-const CollectionMenu = ({ handlePathChildFilter, activeFilters }) => {
-  // PathChildLink의 값에 해당하는 필터 키
+// [수정] resetFilters prop 추가
+const CollectionMenu = ({
+  handlePathChildFilter,
+  activeFilters,
+  resetFilters,
+}) => {
   const pathChildFilterMap = {
     신제품: "new_products",
     라이프스타일: "lifestyle",
@@ -47,53 +77,20 @@ const CollectionMenu = ({ handlePathChildFilter, activeFilters }) => {
     슬립온: "slip_on",
   };
 
-  // '남성 할인 전체' (메인 경로) 필터를 해제/토글하는 함수
-  const clearMainFilter = () => {
-    // 'discount_men_all' 필터는 토글 방식 (PathActiveLink는 Category 필터 중 하나로 간주)
-    handlePathChildFilter("discount_men_all", "discount_men_all");
-  };
-
   return (
     <CollectionMenuContainer>
       <CollectionPath>
-        {/* 활성화된 메인 경로 (토글 카테고리 필터) */}
-        <PathActiveLink onClick={clearMainFilter} style={{ cursor: "pointer" }}>
-          {"남성 할인 전체"}
-          {/* '남성 할인 전체'가 활성화되어 있으면 X 아이콘 표시 */}
-          {activeFilters["discount_men_all"] && (
-            <CloseIconSVG
-              height="11"
-              width="11"
-              fill="none"
-              viewBox="0 0 11 11"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                stroke="#212121"
-                strokeWidth="0.541667"
-                x1="9.95323"
-                x2="0.191143"
-                y1="0.191508"
-                y2="9.95359"
-              />
-              <line
-                stroke="#212121"
-                strokeWidth="0.541667"
-                transform="matrix(0.707107 0.707107 0.707107 -0.707107 0.488281 0)"
-                x2="13.8057"
-                y1="-0.270833"
-                y2="-0.270833"
-              />
-            </CloseIconSVG>
-          )}
+        {/* [수정] 텍스트 변경 및 클릭 시 초기화(resetFilters) 연결 */}
+        <PathActiveLink onClick={resetFilters} style={{ cursor: "pointer" }}>
+          {"남성 신발 전체"}
         </PathActiveLink>
         <PathChildren>
           {Object.entries(pathChildFilterMap).map(([label, filterKey]) => (
             <PathChildLink
               key={filterKey}
-              as="button" // Link 대신 button 사용
+              as="button"
               onClick={() => handlePathChildFilter(filterKey, filterKey)}
-              $active={activeFilters[filterKey] || false} // 활성화 상태 표시
+              $active={activeFilters[filterKey] || false}
             >
               {label}
             </PathChildLink>
@@ -107,21 +104,29 @@ const CollectionMenu = ({ handlePathChildFilter, activeFilters }) => {
 const ProductCardComponent = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const isSale = product.price !== product.salePrice;
-  const imageUrl = product.imageUrls[0]?.url || "/default_placeholder.webp";
-  const imageAlt = product.imageUrls[0]?.alt || product.name;
+  const finalPrice =
+    product.finalPrice ||
+    Math.round(product.price * (1 - (product.discountRate || 0) / 100));
+  const isSale = product.discountRate > 0;
 
-  // 1. 사용할 상품 (예: ID 101) 선택
-  const targetProductId = 101;
-  const targetProduct = mockProducts.find((p) => p.id === targetProductId);
+  // 이미지 경로 처리: 서버 포트 3000번 명시
+  const getImageUrl = (path) => {
+    if (!path) return "/default_placeholder.webp";
+    // 이미 http로 시작하는 절대 경로라면 그대로 사용
+    if (path.startsWith("http")) return path;
+    // 상대 경로라면 서버 주소(localhost:3000)를 붙여서 반환
+    return `http://localhost:3000${path.startsWith("/") ? "" : "/"}${path}`;
+  };
 
-  // 2. Set을 이용한 재고 확인 로직 준비 (includes() 대안)
-  const availableStockSet = new Set(
-    targetProduct.sizes.map((size) => size.toString())
+  const imageUrl = getImageUrl(
+    product.images && product.images.length > 0 ? product.images[0] : null
   );
+  const imageAlt = product.name;
 
-  // 3. 렌더링할 전체 사이즈 목록 (mockFilters에서 가져옴)
-  const ALL_SIZES_TO_RENDER = mockFilters.sizes; // [{value: '250', label: '250'}, ...]
+  // 가용 사이즈 Set
+  const availableStockSet = new Set(
+    (product.availableSizes || []).map((size) => size.toString())
+  );
 
   return (
     <ProductCard
@@ -129,9 +134,8 @@ const ProductCardComponent = ({ product }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. 상품 이미지 및 기본 정보 (가격, 소재 포함) */}
       <Link
-        to={`/product/${product.id}`}
+        to={`/product/${product._id || product.id}`} // MongoDB _id 사용
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <ImageWrapper>
@@ -139,30 +143,27 @@ const ProductCardComponent = ({ product }) => {
           <img src={imageUrl} alt={imageAlt} />
         </ImageWrapper>
 
-        {/* 2. 상품 이름, 카테고리, 가격을 ProductInfoWrapper로 감싸서 레이어 분리 */}
         <ProductInfoWrapper>
           <h4>{product.name}</h4>
-          <h3>{product.category.join(", ")}</h3>
+          {/* categories는 배열이므로 join */}
+          <h3>{product.categories ? product.categories.join(", ") : ""}</h3>
           <p className="price">
             {isSale && (
               <span className="original-price">
                 {product.price.toLocaleString()}원
               </span>
             )}
-            <span className="sale-price">
-              {product.salePrice.toLocaleString()}원
-            </span>
+            <span className="sale-price">{finalPrice.toLocaleString()}원</span>
           </p>
         </ProductInfoWrapper>
       </Link>
 
-      {/* 3. 호버 시 나타나는 사이즈 오버레이 (Link 외부에 위치) */}
-      {isHovered && targetProduct && (
+      {/* 호버 시 나타나는 사이즈 오버레이 */}
+      {isHovered && (
         <div className="size-overlay">
           <div className="size-grid">
-            {ALL_SIZES_TO_RENDER.map((sizeItem) => {
+            {SERVER_FILTER_OPTIONS.sizes.map((sizeItem) => {
               const isInStock = availableStockSet.has(sizeItem.value);
-
               return (
                 <SizeItem key={sizeItem.value} $isAvailable={isInStock}>
                   {sizeItem.label}
@@ -177,17 +178,11 @@ const ProductCardComponent = ({ product }) => {
 };
 
 const FilterComponent = ({ title, type, options, activeFilters, onToggle }) => {
-  const isMultiSelect = type === "sizes" || type === "materials"; // 다중 선택 필터
+  const isMultiSelect = type === "sizes" || type === "materials";
 
   if (isMultiSelect) {
-    // 사이즈, 소재 (체크박스 스타일)
     const containerClass =
-      type === "sizes"
-        ? "sizes-container"
-        : type === "materials"
-        ? "material-list"
-        : ""; // 소재에 명확한 클래스 부여
-
+      type === "sizes" ? "sizes-container" : "material-list";
     return (
       <FilterSection>
         <h4>{title}</h4>
@@ -208,6 +203,7 @@ const FilterComponent = ({ title, type, options, activeFilters, onToggle }) => {
       </FilterSection>
     );
   } else {
+    // 단일 선택 버튼형 (현재 코드에선 사용되지 않을 수 있으나 유지)
     return (
       <FilterSection>
         <h4>{title}</h4>
@@ -228,99 +224,115 @@ const FilterComponent = ({ title, type, options, activeFilters, onToggle }) => {
 };
 
 // ------------------------------------------------
-// Filtering & Sorting Logic
-// ------------------------------------------------
-
-// 필터링 및 정렬 로직 (카테고리 레이블 매핑 수정)
-const applyFiltersAndSort = (products, activeFilters, sortOption) => {
-  // 1. Filtering Logic (항목 내 OR, 항목 간 AND)
-  const filtered = products.filter((product) => {
-    // --- 1-1. Category & Path Filter (OR) ---
-    // 활성화된 모든 카테고리/경로 필터 키를 수집합니다. (discount_men_all 포함)
-    const allCategoryKeys = [
-      ...mockFilters.categories.map((cat) => cat.value), // 사이드바 카테고리 키
-      "discount_men_all", // 메인 경로 필터 키
-    ].filter((key) => activeFilters[key]);
-
-    // 'discount_men_all' 필터는 상품 필터링을 하지 않고 경로 표시에만 사용되는 것으로 간주하여 제외합니다.
-    const activeContentFilters = allCategoryKeys.filter(
-      (key) => key !== "discount_men_all"
-    );
-
-    if (activeContentFilters.length > 0) {
-      const isContentCategoryMatch = activeContentFilters.some((filterKey) => {
-        // 필터 키(e.g., 'new_products')에 해당하는 레이블(e.g., '신제품')을 찾습니다.
-        // mockFilters.categories는 { value: key, label: label } 형태이므로,
-        // key를 통해 label을 찾아 상품의 category 배열과 비교합니다.
-        const categoryLabel =
-          mockFilters.categories.find((c) => c.value === filterKey)?.label ||
-          filterKey;
-
-        // 상품의 category 배열(레이블로 구성됨: ["라이프스타일", "신제품"])에 해당 레이블이 포함되어 있는지 확인
-        return product.category.includes(categoryLabel);
-      });
-      if (!isContentCategoryMatch) return false;
-    }
-
-    // --- 1-2. Size Filter (OR) ---
-    const sizeFilters = activeFilters.sizes || [];
-    if (sizeFilters.length > 0) {
-      // sizeFilters는 문자열(예: '270')을 포함하므로, 상품의 sizes(숫자 배열)와 비교하기 위해 숫자로 변환합니다.
-      const isSizeMatch = sizeFilters.some((size) =>
-        product.sizes.includes(parseInt(size))
-      );
-      if (!isSizeMatch) return false;
-    }
-
-    // --- 1-3. Material Filter (OR) ---
-    const materialFilters = activeFilters.materials || [];
-    if (materialFilters.length > 0) {
-      // materialFilters는 상품 데이터의 material 값(e.g., '울')을 직접 포함합니다.
-      const isMaterialMatch = materialFilters.some(
-        (materialValue) => product.material === materialValue
-      );
-      if (!isMaterialMatch) return false;
-    }
-
-    return true;
-  });
-
-  // 2. Sorting Logic (mockData.js의 수정된 value에 맞게 업데이트)
-  const sorted = [...filtered].sort((a, b) => {
-    switch (sortOption) {
-      case "newest":
-        return new Date(b.registeredAt) - new Date(a.registeredAt);
-      case "price_low":
-        return a.salePrice - b.salePrice;
-      case "price_high":
-        return b.salePrice - a.salePrice;
-      case "sales_high":
-        return b.sales - a.sales;
-      default:
-        // 'recommend' 또는 기본값
-        return 0;
-    }
-  });
-
-  return sorted;
-};
-
-// ------------------------------------------------
 // Main Component
 // ------------------------------------------------
 
 const ProductList = () => {
   const [activeFilters, setActiveFilters] = useState({});
-  const [sortOption, setSortOption] = useState("newest"); // 정렬 상태
+  const [sortOption, setSortOption] = useState("newest");
+  const [products, setProducts] = useState([]); // 서버에서 받아온 상품 목록
+  const [loading, setLoading] = useState(false);
 
-  // 필터 토글 로직
+  // 1. 서버 API 호출 및 필터링 로직 (정렬은 제외)
+  const fetchProducts = useCallback(async () => {
+    setLoading(true);
+    try {
+      // 쿼리 스트링 구성
+      const params = new URLSearchParams();
+
+      // (1) 카테고리/경로 필터 매핑
+      // 클라이언트 필터 키 -> 서버 쿼리 파라미터 매핑
+      if (activeFilters["lifestyle"]) params.append("category", "lifestyle");
+      if (activeFilters["slip_on"]) params.append("category", "slipon"); // 서버 철자 주의: slipon
+      if (activeFilters["new_products"]) params.append("isNew", "true");
+      if (activeFilters["sale"]) params.append("onSale", "true");
+
+      // (2) 소재 필터 (배열 -> 콤마 구분 문자열)
+      if (activeFilters.materials && activeFilters.materials.length > 0) {
+        params.append("materials", activeFilters.materials.join(","));
+      }
+
+      // (3) 사이즈 필터
+      if (activeFilters.sizes && activeFilters.sizes.length > 0) {
+        params.append("sizes", activeFilters.sizes.join(","));
+      }
+
+      // API 호출
+      const response = await fetch(`/api/products?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      // 에러 처리 로직 (필요시 추가)
+    } finally {
+      setLoading(false);
+    }
+  }, [activeFilters]);
+
+  // 필터가 변경될 때마다 서버 요청
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  // 2. 클라이언트 사이드 정렬 (서버에서 받아온 데이터를 프론트에서 정렬)
+  const sortedProducts = useMemo(() => {
+    const sorted = [...products];
+    sorted.sort((a, b) => {
+      // 가격 계산 (Virtual fields가 없을 경우 대비)
+      const getPrice = (p) =>
+        p.finalPrice || Math.round(p.price * (1 - (p.discountRate || 0) / 100));
+
+      switch (sortOption) {
+        case "recommend": // [추천순 로직 수정] 세일 중 > 판매량 높음 우선
+          const isSale = (p) => {
+            // 서버에서 가상 필드 onSale을 보내주면 그것을 사용
+            if (typeof p.onSale === "boolean") return p.onSale;
+
+            // 아니면 클라이언트에서 계산 (할인율 > 0 그리고 기간 유효)
+            const now = new Date();
+            const start = p.saleStartDate ? new Date(p.saleStartDate) : null;
+            const end = p.saleEndDate ? new Date(p.saleEndDate) : null;
+            return (
+              p.discountRate > 0 &&
+              (!start || start <= now) &&
+              (!end || end >= now)
+            );
+          };
+
+          const saleA = isSale(a);
+          const saleB = isSale(b);
+
+          // 1. 세일 여부 (세일 중인 상품이 앞으로)
+          if (saleA && !saleB) return -1;
+          if (!saleA && saleB) return 1;
+
+          // 2. 판매량 내림차순
+          return (b.salesCount || 0) - (a.salesCount || 0);
+
+        case "newest":
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        case "price_low":
+          return getPrice(a) - getPrice(b);
+        case "price_high":
+          return getPrice(b) - getPrice(a);
+        case "sales_high":
+          return (b.salesCount || 0) - (a.salesCount || 0); // salesCount 사용
+        default:
+          return 0;
+      }
+    });
+    return sorted;
+  }, [products, sortOption]);
+
+  // 필터 토글 핸들러
   const toggleFilter = useCallback((key, value) => {
     if (key === "sizes" || key === "materials") {
-      // 다중 선택 필터 (sizes, materials)
       setActiveFilters((prevFilters) => {
         const currentValues = prevFilters[key] || [];
         if (currentValues.includes(value)) {
-          // 제거
           const newValues = currentValues.filter((v) => v !== value);
           if (newValues.length === 0) {
             const { [key]: _, ...rest } = prevFilters;
@@ -328,78 +340,49 @@ const ProductList = () => {
           }
           return { ...prevFilters, [key]: newValues };
         } else {
-          // 추가
           return { ...prevFilters, [key]: [...currentValues, value] };
         }
       });
     } else {
-      // 단일 선택 필터 (category, PathChildren 필터 포함)
       setActiveFilters((prevFilters) => {
         const newFilters = { ...prevFilters };
         const isCurrentlyActive = newFilters[key];
 
         if (PATH_CHILD_FILTER_KEYS.includes(key)) {
-          // PathChildren 필터: 배타적 단일 선택 (PathChildren 내에서만)
-
-          // 1. 현재 활성화된 Path Children 필터만 모두 해제합니다.
           PATH_CHILD_FILTER_KEYS.forEach((filterKey) => {
             delete newFilters[filterKey];
           });
-
-          // 2. 클릭한 필터가 현재 비활성화 상태였다면 활성화합니다.
           if (!isCurrentlyActive) {
             newFilters[key] = true;
           }
         } else {
-          // 일반 카테고리 필터 ('discount_men_all' 포함): 토글
           if (isCurrentlyActive) {
             delete newFilters[key];
           } else {
             newFilters[key] = true;
           }
         }
-
         return newFilters;
       });
     }
   }, []);
 
-  // CollectionMenu의 PathChildLink에서 사용할 핸들러 (toggleFilter를 그대로 사용)
   const handlePathChildFilter = toggleFilter;
 
   const resetFilters = useCallback(() => {
     setActiveFilters({});
   }, []);
 
-  const filteredAndSortedProducts = useMemo(() => {
-    return applyFiltersAndSort(mockProducts, activeFilters, sortOption);
-  }, [activeFilters, sortOption]);
-
-  // 적용된 필터 목록을 표시하기 위한 가공 및 제거 로직 개선
+  // 적용된 필터 표시 로직
   const appliedFilters = useMemo(() => {
     const filters = [];
-
-    // 필터 키-레이블 매핑 생성
-    const categoryMap = Object.fromEntries(
-      mockFilters.categories.map((c) => [c.value, c.label])
-    );
-    // 소재 필터의 rawValue와 label 매핑
     const materialMap = Object.fromEntries(
-      mockFilters.materials.map((m) => [m.value, m.label])
+      SERVER_FILTER_OPTIONS.materials.map((m) => [m.value, m.label])
     );
 
-    // 카테고리 및 경로 필터 (key로 저장되어 있음)
-    [...PATH_CHILD_FILTER_KEYS, "discount_men_all"].forEach((key) => {
-      if (activeFilters[key]) {
-        // key를 통해 label을 찾거나 기본값(할인 전체) 사용
-        const label =
-          categoryMap[key] ||
-          (key === "discount_men_all" ? "남성 할인 전체" : key);
-        filters.push({ key: key, value: label, type: "category" });
-      }
-    });
+    // 카테고리 필터 태그 표시 제거 (요청사항 반영 유지)
+    // 사이즈와 소재 필터만 필터 항목에 표시
 
-    // 사이즈 (key: sizes, value: '250mm', rawValue: '250')
     (activeFilters.sizes || []).forEach((size) => {
       filters.push({
         key: "sizes",
@@ -409,7 +392,6 @@ const ProductList = () => {
       });
     });
 
-    // 소재 (key: materials, value: '가볍고 시원한 tree', rawValue: '나무 섬유')
     (activeFilters.materials || []).forEach((materialValue) => {
       const label = materialMap[materialValue] || materialValue;
       filters.push({
@@ -426,18 +408,17 @@ const ProductList = () => {
   return (
     <ProductListContainer>
       <TitleBar>
-        <h1>남성 라이프스타일 신발</h1>
+        <h1>남성 신발</h1>
       </TitleBar>
 
       <CollectionMenu
         handlePathChildFilter={handlePathChildFilter}
         activeFilters={activeFilters}
+        resetFilters={resetFilters}
       />
 
       <Layout>
-        {/* Filter Sidebar */}
         <FilterSidebar>
-          {/* Applied Filters Display */}
           <AppliedFiltersContainer>
             {appliedFilters.map((filter) => (
               <FilterTag key={`${filter.key}-${filter.value}`}>
@@ -448,12 +429,8 @@ const ProductList = () => {
                       filter.type === "sizes" ||
                       filter.type === "materials"
                     ) {
-                      const valueToRemove =
-                        filter.rawValue || filter.value.replace("mm", "");
-                      // 개별 필터 제거 로직
-                      toggleFilter(filter.key, valueToRemove);
+                      toggleFilter(filter.key, filter.rawValue);
                     } else {
-                      // 개별 필터 제거 로직
                       toggleFilter(filter.key, filter.key);
                     }
                   }}
@@ -463,41 +440,38 @@ const ProductList = () => {
               </FilterTag>
             ))}
           </AppliedFiltersContainer>
-          {/*모든 필터를 지우는 초기화 버튼 */}
+
           {appliedFilters.length > 0 && (
             <ClearFiltersButton onClick={resetFilters}>
               초기화
             </ClearFiltersButton>
           )}
-          {/* 사이즈 필터 */}
+
           <FilterComponent
             title="사이즈"
             type="sizes"
-            options={mockFilters.sizes}
+            options={SERVER_FILTER_OPTIONS.sizes}
             activeFilters={activeFilters}
             onToggle={toggleFilter}
           />
-          {/* 소재 필터 */}
+
           <FilterComponent
             title="소재"
             type="materials"
-            options={mockFilters.materials}
+            options={SERVER_FILTER_OPTIONS.materials}
             activeFilters={activeFilters}
             onToggle={toggleFilter}
           />
         </FilterSidebar>
 
-        {/* Product Grid */}
         <ProductGrid>
           <header>
-            <span>{filteredAndSortedProducts.length}개 제품</span>
-
-            {/* Sorting Select */}
+            <span>{sortedProducts.length}개 제품</span>
             <SortSelect
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
             >
-              {mockFilters.sortOptions.map((option) => (
+              {SERVER_FILTER_OPTIONS.sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -505,11 +479,15 @@ const ProductList = () => {
             </SortSelect>
           </header>
 
-          {/* Product Grid */}
           <Grid>
-            {filteredAndSortedProducts.length > 0 ? (
-              filteredAndSortedProducts.map((product) => (
-                <ProductCardComponent key={product.id} product={product} />
+            {loading ? (
+              <p>상품을 불러오는 중입니다...</p>
+            ) : sortedProducts.length > 0 ? (
+              sortedProducts.map((product) => (
+                <ProductCardComponent
+                  key={product._id || product.id}
+                  product={product}
+                />
               ))
             ) : (
               <p>필터 조건에 맞는 상품이 없습니다.</p>

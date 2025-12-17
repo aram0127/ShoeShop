@@ -32,8 +32,8 @@ export default function ImageSlider() {
     if (index > 0) setIndex(index - 1);
   };
 
-  const handleClick = (gender) => {
-    navigate(`/products?gender=${gender}`);
+  const handleClick = () => {
+    navigate(`/products`);
   };
 
   return (
@@ -41,17 +41,19 @@ export default function ImageSlider() {
       <MainImage>
         <img src="/images/main_image.webp" alt="메인 이미지" />
         <MainImageButtons>
-          <MainImageButton onClick={() => handleClick("male")}>
+          <MainImageButton onClick={() => handleClick()}>
             남성 세일
           </MainImageButton>
-          <MainImageButton onClick={() => handleClick("female")}>
+          <MainImageButton onClick={() => handleClick()}>
             여성 세일
           </MainImageButton>
         </MainImageButtons>
       </MainImage>
 
       <SliderWrapper>
-        <Button onClick={prevSlide} disabled={index === 0}>〈</Button>
+        <Button onClick={prevSlide} disabled={index === 0}>
+          〈
+        </Button>
         <SliderContainer translate={index}>
           {images.map((item, i) => (
             <SlideCard key={i}>
@@ -65,7 +67,9 @@ export default function ImageSlider() {
             </SlideCard>
           ))}
         </SliderContainer>
-        <Button onClick={nextSlide} disabled={index === maxIndex}>〉</Button>
+        <Button onClick={nextSlide} disabled={index === maxIndex}>
+          〉
+        </Button>
       </SliderWrapper>
 
       <SectionTitle>우리가 사용하는 소재</SectionTitle>

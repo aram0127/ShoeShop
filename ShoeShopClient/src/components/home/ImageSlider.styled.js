@@ -30,6 +30,7 @@ export const MainImageButton = styled.button`
   font-weight: 700;
   border: none;
   border-radius: 8px;
+  color: rgba(255, 255, 255, 1);
   background-color: rgba(27, 26, 26, 0.85);
   cursor: pointer;
   transition: 0.3s;
@@ -47,7 +48,7 @@ export const SliderWrapper = styled.div`
   margin: 0 auto;
   overflow: hidden;
   padding: 20px 0;
-  color:black;
+  color: black;
 `;
 
 export const SliderContainer = styled.div`
@@ -60,7 +61,7 @@ export const SliderContainer = styled.div`
 export const SlideCard = styled.div`
   flex: 0 0 calc(20% - 8px);
   background: #ffffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -135,7 +136,7 @@ export const SectionTitle = styled.h2`
   font-weight: 800;
   text-align: left;
   max-width: 500px;
-  margin: 50px 1030px 30px auto; 
+  margin: 50px 1030px 30px auto;
   color: #222;
 `;
 
@@ -155,7 +156,7 @@ export const BigCard = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
 export const BigCardImage = styled.div`
@@ -178,7 +179,6 @@ export const BigCardInfo = styled.div`
     margin-bottom: 0;
     font-weight: 600;
     color: #222;
-    
   }
 
   p {
@@ -217,7 +217,7 @@ export const Newsletter = styled.div`
   h3 {
     font-size: 50px;
     margin-bottom: 0;
-    color:black;
+    color: black;
   }
 
   p {
@@ -239,7 +239,7 @@ export const Newsletter = styled.div`
     border-radius: 6px;
     font-size: 14px;
     background-color: #fff;
-    color:black;
+    color: black;
   }
 
   button {

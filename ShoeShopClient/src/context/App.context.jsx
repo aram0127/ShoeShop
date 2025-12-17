@@ -158,26 +158,27 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // [수정 필요] 리뷰 작성 로직도 추후 서버 API로 변경 권장 (현재는 로컬 state만 변경)
-  const addReview = (productId, rating, content) => {
-    // 힌트: 리뷰 작성 후에도 fetchOrders()를 호출하여 서버 데이터를 반영하는 것이 좋습니다.
-    setOrders((prevOrders) =>
-      prevOrders.map((order) => ({
-        ...order,
-        products: order.items.map(
-          (
-            product // models/Order.js를 보면 필드명이 products가 아니라 items임
-          ) =>
-            product.product.toString() === productId && !product.isReviewed
-              ? {
-                  ...product,
-                  isReviewed: true,
-                  review: { rating, content, date: new Date().toISOString() },
-                }
-              : product
-        ),
-      }))
-    );
+  // [수정] 후기 작성 함수 (서버 연동)
+  const addReview = async (productId, rating, title, content) => {
+    try {
+      await axios.post(
+        "http://localhost:3000/api/reviews",
+        {
+          productId,
+          rating,
+          title, // 서버 모델에 title이 필수이므로 추가
+          content,
+        },
+        { withCredentials: true }
+      );
+
+      // 후기 작성 후 주문 내역을 새로고침하여 '작성 완료' 상태 반영
+      await fetchOrders();
+    } catch (err) {
+      console.error("후기 등록 실패:", err);
+      alert(err.response?.data?.message || "후기 등록 중 오류가 발생했습니다.");
+      throw err; // 컴포넌트에서 에러를 처리할 수 있도록 throw
+    }
   };
 
   const contextValue = {

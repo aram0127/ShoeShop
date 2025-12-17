@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const Review = require("../models/Review");
 
 // 주문하기 (POST /api/orders)
 router.post("/", async (req, res) => {
@@ -70,9 +71,24 @@ router.get("/", async (req, res) => {
       return res.status(401).json({ message: "로그인이 필요합니다." });
     }
 
-    const orders = await Order.find({ user: req.session.user.id }).sort({
-      createdAt: -1,
-    });
+    // lean()을 사용하여 데이터를 수정 가능한 일반 객체로 가져옴
+    const orders = await Order.find({ user: req.session.user.id })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // 각 주문의 상품들에 대해 리뷰 작성 여부 확인
+    for (const order of orders) {
+      for (const item of order.items) {
+        // 해당 유저가 해당 상품에 대해 쓴 리뷰가 있는지 확인
+        const review = await Review.findOne({
+          user: req.session.user.id,
+          product: item.product,
+        });
+
+        // 리뷰가 존재하면 isReviewed = true
+        item.isReviewed = !!review;
+      }
+    }
 
     res.json(orders);
   } catch (err) {

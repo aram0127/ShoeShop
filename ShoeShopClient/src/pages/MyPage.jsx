@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppContext } from "../context/App.context";
+import ReviewForm from "../components/product/ReviewForm";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -130,8 +131,46 @@ const NoOrders = styled.div`
   font-size: 16px;
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+  }
+`;
+
 const MyPage = () => {
   const { user, orders, addReview } = useAppContext();
+
+  // 모달 상태 관리
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   if (!user) {
     return (
@@ -141,46 +180,44 @@ const MyPage = () => {
     );
   }
 
+  // 모달 열기 핸들러
   const handleReviewClick = (productId) => {
-    // 간단한 예시로 window.prompt 사용.
-    // 실제로는 모달(Modal) UI 등을 구현하여 연동하는 것이 좋습니다.
-    const rating = prompt("평점(1~5)을 입력해주세요:", "5");
-    if (rating === null) return;
+    setSelectedProductId(productId);
+    setIsReviewModalOpen(true);
+  };
 
-    const content = prompt("리뷰 내용을 입력해주세요:");
-    if (content) {
-      addReview(productId, parseInt(rating), content);
-      alert("리뷰가 등록되었습니다.");
-    }
+  // 모달 닫기 핸들러
+  const closeReviewModal = () => {
+    setIsReviewModalOpen(false);
+    setSelectedProductId(null);
   };
 
   return (
     <Container>
-      <Title>마이 페이지 - 주문 내역</Title>
+      <h2
+        style={{ fontSize: "28px", marginBottom: "30px", fontWeight: "bold" }}
+      >
+        마이 페이지 - 주문 내역
+      </h2>
 
       {orders.length === 0 ? (
         <NoOrders>아직 주문 내역이 없습니다.</NoOrders>
       ) : (
-        <OrderList>
+        <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
           {orders.map((order) => (
             <OrderCard key={order._id}>
-              {" "}
-              {/* 서버 ID인 _id 사용 */}
               <OrderHeader>
                 <div className="order-info">
                   <span>
                     <strong>주문일자</strong>
-                    {new Date(order.createdAt).toLocaleDateString()}{" "}
-                    {/* createdAt 사용 */}
+                    {new Date(order.createdAt).toLocaleDateString()}
                   </span>
-
                   <span>
                     <strong>총 결제금액</strong>{" "}
                     {order.totalAmount.toLocaleString()}원
                   </span>
                 </div>
               </OrderHeader>
-              {/* products가 아니라 items 배열을 순회해야 함 */}
               {order.items.map((item, idx) => (
                 <OrderItem key={`${order._id}-${idx}`}>
                   <img
@@ -195,17 +232,18 @@ const MyPage = () => {
                     <p>{item.priceAtPurchase.toLocaleString()}원</p>
                   </div>
                   <div className="item-status">
-                    {!item.isReviewed && (
-                      <button
-                        onClick={() => handleReviewClick(item.product)} // item.product가 상품 ID임
-                      >
+                    {!item.isReviewed ? (
+                      <button onClick={() => handleReviewClick(item.product)}>
                         후기 작성
                       </button>
-                    )}
-                    {item.isReviewed && (
+                    ) : (
                       <button
                         disabled
-                        style={{ color: "#aaa", borderColor: "#eee" }}
+                        style={{
+                          color: "#aaa",
+                          borderColor: "#eee",
+                          cursor: "default",
+                        }}
                       >
                         작성 완료
                       </button>
@@ -215,7 +253,22 @@ const MyPage = () => {
               ))}
             </OrderCard>
           ))}
-        </OrderList>
+        </div>
+      )}
+
+      {/* 후기 작성 모달 */}
+      {isReviewModalOpen && (
+        <ModalOverlay onClick={closeReviewModal}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeReviewModal}>
+              &times;
+            </button>
+            <ReviewForm
+              productId={selectedProductId}
+              onReviewSubmitted={closeReviewModal}
+            />
+          </ModalContent>
+        </ModalOverlay>
       )}
     </Container>
   );

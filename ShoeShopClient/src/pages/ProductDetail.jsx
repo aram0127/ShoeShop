@@ -151,10 +151,10 @@ const ProductDetail = () => {
               isOpen={openAccordionIndex === 3}
               onToggle={() => handleAccordionToggle(3)}
             />
-            <Accordion title={`리뷰 (${reviews.length})`}>
+            <Accordion title={`후기 (${reviews.length})`}>
               {reviews.length === 0 ? (
                 <p style={{ padding: "10px", color: "#666" }}>
-                  작성된 리뷰가 없습니다.
+                  작성된 후기가 없습니다.
                 </p>
               ) : (
                 <div

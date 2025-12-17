@@ -30,12 +30,12 @@ export const MainImageButton = styled.button`
   font-weight: 700;
   border: none;
   border-radius: 8px;
-  background-color: rgba(255,255,255,0.85);
+  background-color: rgba(27, 26, 26, 0.85);
   cursor: pointer;
   transition: 0.3s;
 
   &:hover {
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(102, 101, 101, 1);
   }
 `;
 
@@ -47,6 +47,7 @@ export const SliderWrapper = styled.div`
   margin: 0 auto;
   overflow: hidden;
   padding: 20px 0;
+  color:black;
 `;
 
 export const SliderContainer = styled.div`
@@ -58,7 +59,7 @@ export const SliderContainer = styled.div`
 
 export const SlideCard = styled.div`
   flex: 0 0 calc(20% - 8px);
-  background: #ffffffac;
+  background: #ffffffff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   overflow: hidden;
   display: flex;
@@ -75,7 +76,7 @@ export const ImageBox = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: #efefefff;
 
   img {
     width: 100%;
@@ -177,6 +178,7 @@ export const BigCardInfo = styled.div`
     margin-bottom: 0;
     font-weight: 600;
     color: #222;
+    
   }
 
   p {
@@ -188,7 +190,7 @@ export const BigCardInfo = styled.div`
 
   .learn-more {
     display: inline-block;
-    padding: 16px 130px;
+    padding: 16px 30px;
     font-size: 16px;
     background-color: transparent;
     color: #000;
@@ -215,6 +217,7 @@ export const Newsletter = styled.div`
   h3 {
     font-size: 50px;
     margin-bottom: 0;
+    color:black;
   }
 
   p {

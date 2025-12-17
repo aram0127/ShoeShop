@@ -421,13 +421,13 @@ const ProductRegistration = () => {
     discountRate: 0,
     saleStartDate: "",
     saleEndDate: "",
-    photo: null,
+    photos: [],
   });
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "photo" && files) {
-      setFormData((prev) => ({ ...prev, photo: files[0] }));
+    if (name === "photos" && files) {
+      setFormData((prev) => ({ ...prev, photos: Array.from(files) }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -458,7 +458,7 @@ const ProductRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.photo) {
+    if (formData.photos.length === 0) {
       alert("사진은 반드시 포함되어야 합니다.");
       return;
     }
@@ -490,7 +490,9 @@ const ProductRegistration = () => {
       data.append("saleStartDate", formData.saleStartDate);
     if (formData.saleEndDate) data.append("saleEndDate", formData.saleEndDate);
 
-    data.append("images", formData.photo);
+    formData.photos.forEach((file) => {
+      data.append("images", file);
+    });
 
     try {
       await axios.post("/api/admin/products", data, {
@@ -510,7 +512,7 @@ const ProductRegistration = () => {
         discountRate: 0,
         saleStartDate: "",
         saleEndDate: "",
-        photo: null,
+        photos: [],
       });
     } catch (err) {
       console.error("등록 실패:", err);
@@ -657,7 +659,13 @@ const ProductRegistration = () => {
 
       <p>
         <label>상품 이미지 (필수)</label>
-        <input type="file" name="photo" onChange={handleChange} required />
+        <input
+          type="file"
+          name="photos"
+          multiple
+          onChange={handleChange}
+          required
+        />
       </p>
       <button type="submit">상품 등록하기</button>
     </FormContainer>
@@ -756,19 +764,6 @@ const SalesReport = () => {
           onChange={(e) => setEndDate(e.target.value)}
           style={{ padding: "5px" }}
         />
-        <button
-          onClick={fetchSales}
-          style={{
-            padding: "6px 12px",
-            backgroundColor: "#333",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          조회
-        </button>
       </div>
 
       {loading ? (

@@ -12,6 +12,19 @@ import {
   SizeButton,
   AddToCartButton,
   AccordionItem,
+  ReviewSection,
+  ReviewHeader,
+  ReviewSummary,
+  SummaryLeft,
+  AverageScore,
+  StarRow,
+  TotalReviews,
+  ReviewList,
+  ReviewItem,
+  ReviewerInfo,
+  ReviewDate,
+  ReviewBody,
+  ReviewStars,
 } from "./ProductDetail.styled";
 import CartSidebar from "../components/common/CartSidebar";
 
@@ -113,6 +126,19 @@ const ProductDetail = () => {
     }
   };
 
+  // 별점 렌더링 헬퍼 함수
+  const renderStars = (rating) => {
+    return "★".repeat(rating) + "☆".repeat(5 - rating);
+  };
+
+  // 평균 평점 계산
+  const averageRating =
+    reviews.length > 0
+      ? (
+          reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length
+        ).toFixed(1)
+      : 0;
+
   return (
     <>
       <DetailLayout>
@@ -151,69 +177,6 @@ const ProductDetail = () => {
               isOpen={openAccordionIndex === 3}
               onToggle={() => handleAccordionToggle(3)}
             />
-            <Accordion title={`후기 (${reviews.length})`}>
-              {reviews.length === 0 ? (
-                <p style={{ padding: "10px", color: "#666" }}>
-                  작성된 후기가 없습니다.
-                </p>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
-                    maxHeight: "300px",
-                    overflowY: "auto",
-                  }}
-                >
-                  {reviews.map((review) => (
-                    <div
-                      key={review._id}
-                      style={{
-                        borderBottom: "1px solid #eee",
-                        paddingBottom: "10px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          marginBottom: "5px",
-                        }}
-                      >
-                        <strong style={{ color: "#fbc02d" }}>
-                          {"★".repeat(review.rating)}
-                        </strong>
-                        <span style={{ fontSize: "0.8rem", color: "#888" }}>
-                          {new Date(review.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: "0.9rem",
-                          marginBottom: "3px",
-                        }}
-                      >
-                        {review.title}
-                      </div>
-                      <p
-                        style={{
-                          fontSize: "0.9rem",
-                          margin: "0 0 5px 0",
-                          whiteSpace: "pre-wrap",
-                        }}
-                      >
-                        {review.content}
-                      </p>
-                      <div style={{ fontSize: "0.8rem", color: "#666" }}>
-                        작성자: {review.userName || "익명"}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Accordion>
           </div>
         </ImageGallery>
 
@@ -307,6 +270,57 @@ const ProductDetail = () => {
           </OptionsSection>
         </InfoPanel>
       </DetailLayout>
+
+      <ReviewSection>
+        {reviews.length > 0 ? (
+          <>
+            {/* 1. 평점 요약 섹션 */}
+            <ReviewSummary>
+              <SummaryLeft>
+                <AverageScore>{averageRating}</AverageScore>
+                <StarRow className="large">
+                  {renderStars(averageRating)}
+                </StarRow>
+                <TotalReviews>
+                  {reviews.length}건의 리뷰 분석 결과입니다.
+                </TotalReviews>
+              </SummaryLeft>
+              {/* 필요하다면 여기에 '평점 분포 바(Bar)' 추가 가능 */}
+            </ReviewSummary>
+
+            {/* 2. 후기 리스트 섹션 */}
+            <ReviewList>
+              {reviews.map((review) => (
+                <ReviewItem key={review._id}>
+                  <ReviewerInfo>
+                    <span className="name">
+                      {review.userName || "Shoe Lover"}
+                    </span>
+                  </ReviewerInfo>
+                  <div className="review-top">
+                    <ReviewStars>
+                      {renderStars(review.rating)}&nbsp;
+                      <span>
+                        <strong>{review.title}</strong>
+                      </span>
+                    </ReviewStars>
+                    <ReviewDate>
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </ReviewDate>
+                  </div>
+
+                  {/* 제목이 데이터에 없다면 본문 첫줄이나 생략 */}
+                  <ReviewBody>{review.content}</ReviewBody>
+                </ReviewItem>
+              ))}
+            </ReviewList>
+          </>
+        ) : (
+          <div style={{ textAlign: "center", padding: "40px", color: "#999" }}>
+            아직 후기가 없습니다.
+          </div>
+        )}
+      </ReviewSection>
 
       <CartSidebar
         isVisible={isCartVisible}

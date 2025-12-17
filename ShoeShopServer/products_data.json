@@ -1,6 +1,6 @@
 [{
   "_id": {
-    "$oid": "6933281db13685b55993043a"
+    "$oid": "6942ef74162c5601435aa786"
   },
   "name": "라이프 스타일 신발 1",
   "description": "라이프 스타일 신발 1입니다.",
@@ -8,7 +8,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     250,
     285,
@@ -33,7 +33,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993043b"
+    "$oid": "6942ef74162c5601435aa787"
   },
   "name": "라이프 스타일 신발 2",
   "description": "라이프 스타일 신발 2입니다.",
@@ -41,7 +41,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "canvas",
+  "material": "canvas",
   "availableSizes": [
     250,
     285,
@@ -70,7 +70,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993043c"
+    "$oid": "6942ef74162c5601435aa788"
   },
   "name": "라이프 스타일 신발 3",
   "description": "라이프 스타일 신발 3입니다.",
@@ -78,7 +78,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "leather",
+  "material": "leather",
   "availableSizes": [
     260,
     275,
@@ -104,7 +104,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993043d"
+    "$oid": "6942ef74162c5601435aa789"
   },
   "name": "라이프 스타일 신발 4",
   "description": "라이프 스타일 신발 4입니다.",
@@ -112,7 +112,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     260,
     275,
@@ -142,7 +142,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993043e"
+    "$oid": "6942ef74162c5601435aa78a"
   },
   "name": "라이프 스타일 신발 5",
   "description": "라이프 스타일 신발 5입니다.",
@@ -150,7 +150,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "canvas",
+  "material": "canvas",
   "availableSizes": [
     260,
     255,
@@ -176,7 +176,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993043f"
+    "$oid": "6942ef74162c5601435aa78b"
   },
   "name": "라이프 스타일 신발 6",
   "description": "라이프 스타일 신발 6입니다.",
@@ -184,7 +184,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     260,
     255,
@@ -206,7 +206,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930440"
+    "$oid": "6942ef74162c5601435aa78c"
   },
   "name": "라이프 스타일 신발 7",
   "description": "라이프 스타일 신발 7입니다.",
@@ -214,7 +214,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     280,
     295,
@@ -239,7 +239,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930441"
+    "$oid": "6942ef74162c5601435aa78d"
   },
   "name": "라이프 스타일 신발 8",
   "description": "라이프 스타일 신발 8입니다.",
@@ -247,7 +247,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     265,
     295,
@@ -275,7 +275,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930442"
+    "$oid": "6942ef74162c5601435aa78e"
   },
   "name": "라이프 스타일 신발 9",
   "description": "라이프 스타일 신발 9입니다.",
@@ -283,7 +283,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "cotton",
+  "material": "cotton",
   "availableSizes": [
     265,
     295,
@@ -305,7 +305,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930443"
+    "$oid": "6942ef74162c5601435aa78f"
   },
   "name": "라이프 스타일 신발 10",
   "description": "라이프 스타일 신발 10입니다.",
@@ -313,7 +313,7 @@
   "categories": [
     "lifestyle"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     290,
     275,
@@ -339,7 +339,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930444"
+    "$oid": "6942ef74162c5601435aa790"
   },
   "name": "슬립온 신발 1",
   "description": "슬립온 신발 1입니다.",
@@ -347,7 +347,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     285,
     250,
@@ -371,7 +371,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930445"
+    "$oid": "6942ef74162c5601435aa791"
   },
   "name": "슬립온 신발 2",
   "description": "슬립온 신발 2입니다.",
@@ -379,7 +379,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     290,
     280,
@@ -410,7 +410,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930446"
+    "$oid": "6942ef74162c5601435aa792"
   },
   "name": "슬립온 신발 3",
   "description": "슬립온 신발 3입니다.",
@@ -418,7 +418,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     295,
     280,
@@ -440,7 +440,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930447"
+    "$oid": "6942ef74162c5601435aa793"
   },
   "name": "슬립온 신발 4",
   "description": "슬립온 신발 4입니다.",
@@ -448,7 +448,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     300,
     285,
@@ -476,7 +476,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930448"
+    "$oid": "6942ef74162c5601435aa794"
   },
   "name": "슬립온 신발 5",
   "description": "슬립온 신발 5입니다.",
@@ -484,7 +484,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     260,
     255,
@@ -506,7 +506,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930449"
+    "$oid": "6942ef74162c5601435aa795"
   },
   "name": "슬립온 신발 6",
   "description": "슬립온 신발 6입니다.",
@@ -514,7 +514,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     250,
     260,
@@ -542,7 +542,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044a"
+    "$oid": "6942ef74162c5601435aa796"
   },
   "name": "슬립온 신발 7",
   "description": "슬립온 신발 7입니다.",
@@ -550,7 +550,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     280,
     290,
@@ -575,7 +575,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044b"
+    "$oid": "6942ef74162c5601435aa797"
   },
   "name": "슬립온 신발 8",
   "description": "슬립온 신발 8입니다.",
@@ -583,7 +583,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     265,
     285,
@@ -612,7 +612,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044c"
+    "$oid": "6942ef74162c5601435aa798"
   },
   "name": "슬립온 신발 9",
   "description": "슬립온 신발 9입니다.",
@@ -620,7 +620,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     260,
     285,
@@ -645,7 +645,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044d"
+    "$oid": "6942ef74162c5601435aa799"
   },
   "name": "슬립온 신발 10",
   "description": "슬립온 신발 10입니다.",
@@ -653,7 +653,7 @@
   "categories": [
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     265,
     260,
@@ -682,7 +682,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044e"
+    "$oid": "6942ef74162c5601435aa79a"
   },
   "name": "하이브리드 신발 1",
   "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 1입니다.",
@@ -691,7 +691,7 @@
     "lifestyle",
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     265,
     275,
@@ -721,7 +721,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b55993044f"
+    "$oid": "6942ef74162c5601435aa79b"
   },
   "name": "하이브리드 신발 2",
   "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 2입니다.",
@@ -730,7 +730,7 @@
     "lifestyle",
     "slipon"
   ],
-  "materials": "tree",
+  "material": "tree",
   "availableSizes": [
     260,
     270,
@@ -753,7 +753,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930450"
+    "$oid": "6942ef74162c5601435aa79c"
   },
   "name": "하이브리드 신발 3",
   "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 3입니다.",
@@ -762,7 +762,7 @@
     "lifestyle",
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     295,
     270,
@@ -791,7 +791,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930451"
+    "$oid": "6942ef74162c5601435aa79d"
   },
   "name": "하이브리드 신발 4",
   "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 4입니다.",
@@ -800,7 +800,7 @@
     "lifestyle",
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     265,
     275,
@@ -829,7 +829,7 @@
 },
 {
   "_id": {
-    "$oid": "6933281db13685b559930452"
+    "$oid": "6942ef74162c5601435aa79e"
   },
   "name": "하이브리드 신발 5",
   "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 5입니다.",
@@ -838,7 +838,7 @@
     "lifestyle",
     "slipon"
   ],
-  "materials": "wool",
+  "material": "wool",
   "availableSizes": [
     300,
     270,

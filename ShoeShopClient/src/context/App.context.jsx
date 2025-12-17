@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { mockProducts, mockOrders } from "../mockData";
+import { mockProducts } from "../mockData"; // mockOrders는 제거
 
 const AppContext = createContext();
 
@@ -8,7 +8,7 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => {
   const [products, setProducts] = useState(mockProducts);
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders, setOrders] = useState([]); // 초기값 빈 배열로 변경
   const [cart, setCart] = useState([]);
 
   const [user, setUser] = useState(null);
@@ -26,6 +26,18 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // [추가] 주문 내역 불러오기 함수
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/orders", {
+        withCredentials: true,
+      });
+      setOrders(response.data);
+    } catch (err) {
+      console.error("주문 내역 불러오기 실패", err);
+    }
+  };
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -37,6 +49,8 @@ export const AppProvider = ({ children }) => {
         );
         if (response.data.isLoggedIn) {
           setUser(response.data.user);
+          // 로그인 상태라면 주문 내역도 함께 불러옴
+          fetchOrders();
         }
       } catch (err) {
         console.error("세션 확인 실패", err);
@@ -51,6 +65,7 @@ export const AppProvider = ({ children }) => {
   const login = (userData) => {
     setUser(userData);
     fetchCart(); // 로그인 시 장바구니 다시 불러오기
+    fetchOrders(); // [추가] 로그인 시 주문 내역 불러오기
   };
 
   const logout = async () => {
@@ -63,6 +78,7 @@ export const AppProvider = ({ children }) => {
         }
       );
       setCart([]);
+      setOrders([]); // [추가] 로그아웃 시 주문 내역 초기화
       setUser(null);
       alert("로그아웃 되었습니다.");
     } catch (err) {
@@ -70,20 +86,18 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // [수정] 장바구니에 상품 추가 (서버 연동)
+  // 장바구니에 상품 추가
   const addToCart = async (product, size, quantity = 1) => {
     try {
-      // 서버 API는 productId, size, quantity를 요구함
       const response = await axios.post(
         "http://localhost:3000/api/cart",
         {
-          productId: product._id || product.id, // ID 추출
+          productId: product._id || product.id,
           size,
           quantity,
         },
         { withCredentials: true }
       );
-      // 서버에서 업데이트된 장바구니 배열을 반환함
       setCart(response.data);
     } catch (err) {
       console.error("장바구니 담기 실패:", err);
@@ -91,32 +105,23 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // [수정] 결제 및 주문 내역 추가
+  // [수정] 결제 및 주문 내역 추가 (서버 연동)
   const checkout = async () => {
     if (cart.length === 0) return false;
 
     try {
-      // 1. 주문 생성 (로컬 상태만 업데이트 - 추후 서버 주문 API 연동 필요)
-      const newOrder = {
-        id: orders.length + 1,
-        date: new Date().toISOString(),
-        totalAmount: cart.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        ),
-        products: cart.map((item) => ({
-          ...item,
-          status: "배송 준비 중",
-          isReviewed: false,
-        })),
-      };
-      setOrders((prev) => [newOrder, ...prev]);
+      // 1. 서버에 주문 생성 요청 (이 API 내부에서 장바구니 비우기까지 처리됨)
+      await axios.post(
+        "http://localhost:3000/api/orders",
+        {},
+        { withCredentials: true }
+      );
 
-      // 2. 서버 장바구니 비우기
-      await axios.delete("http://localhost:3000/api/cart", {
-        withCredentials: true,
-      });
-      setCart([]);
+      // 2. 클라이언트 상태 업데이트
+      setCart([]); // 장바구니 비우기
+
+      // 3. 최신 주문 내역 다시 불러오기 (DB에 저장된 내역 확인)
+      await fetchOrders();
 
       return true;
     } catch (err) {
@@ -126,7 +131,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // [추가] 수량 변경 함수
+  // 수량 변경 함수
   const updateQuantity = async (productId, size, newQuantity) => {
     try {
       const response = await axios.put(
@@ -140,7 +145,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // [추가] 개별 아이템 삭제 함수
+  // 개별 아이템 삭제 함수
   const removeFromCart = async (productId, size) => {
     try {
       const response = await axios.delete(
@@ -153,18 +158,23 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // [수정 필요] 리뷰 작성 로직도 추후 서버 API로 변경 권장 (현재는 로컬 state만 변경)
   const addReview = (productId, rating, content) => {
+    // 힌트: 리뷰 작성 후에도 fetchOrders()를 호출하여 서버 데이터를 반영하는 것이 좋습니다.
     setOrders((prevOrders) =>
       prevOrders.map((order) => ({
         ...order,
-        products: order.products.map((product) =>
-          product.productId === productId && !product.isReviewed
-            ? {
-                ...product,
-                isReviewed: true,
-                review: { rating, content, date: new Date().toISOString() },
-              }
-            : product
+        products: order.items.map(
+          (
+            product // models/Order.js를 보면 필드명이 products가 아니라 items임
+          ) =>
+            product.product.toString() === productId && !product.isReviewed
+              ? {
+                  ...product,
+                  isReviewed: true,
+                  review: { rating, content, date: new Date().toISOString() },
+                }
+              : product
         ),
       }))
     );

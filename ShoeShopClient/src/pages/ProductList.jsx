@@ -349,9 +349,15 @@ const ProductList = () => {
         const isCurrentlyActive = newFilters[key];
 
         if (PATH_CHILD_FILTER_KEYS.includes(key)) {
+          // 1. 카테고리 전환 시 다른 카테고리 해제
           PATH_CHILD_FILTER_KEYS.forEach((filterKey) => {
             delete newFilters[filterKey];
           });
+
+          // 2. [수정됨] 카테고리 전환 시 사이즈와 소재 필터도 함께 초기화
+          delete newFilters.sizes;
+          delete newFilters.materials;
+
           if (!isCurrentlyActive) {
             newFilters[key] = true;
           }
@@ -369,8 +375,24 @@ const ProductList = () => {
 
   const handlePathChildFilter = toggleFilter;
 
+  // 전체 초기화 (카테고리 포함) - "남성 신발 전체" 클릭 시 사용
   const resetFilters = useCallback(() => {
     setActiveFilters({});
+  }, []);
+
+  // [수정됨] 사이드 필터(사이즈, 소재)만 초기화 - "초기화" 버튼 클릭 시 사용
+  // 현재 활성화된 카테고리는 유지합니다.
+  const resetSideFilters = useCallback(() => {
+    setActiveFilters((prev) => {
+      const newFilters = {};
+      // 현재 활성화된 카테고리가 있다면 유지
+      PATH_CHILD_FILTER_KEYS.forEach((key) => {
+        if (prev[key]) {
+          newFilters[key] = true;
+        }
+      });
+      return newFilters;
+    });
   }, []);
 
   // 적용된 필터 표시 로직
@@ -442,7 +464,9 @@ const ProductList = () => {
           </AppliedFiltersContainer>
 
           {appliedFilters.length > 0 && (
-            <ClearFiltersButton onClick={resetFilters}>
+            // [수정됨] resetFilters -> resetSideFilters 로 변경
+            // 사이드바 초기화 버튼은 카테고리를 유지하고 나머지 필터만 초기화
+            <ClearFiltersButton onClick={resetSideFilters}>
               초기화
             </ClearFiltersButton>
           )}

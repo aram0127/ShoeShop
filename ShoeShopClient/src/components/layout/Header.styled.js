@@ -17,6 +17,7 @@ export const Logo = styled.div`
   font-weight: 900;
   cursor: pointer;
   letter-spacing: 1px;
+  color:black;
 `;
 
 export const Nav = styled.nav`
@@ -40,6 +41,7 @@ export const Nav = styled.nav`
     height: 100%;
     display: flex;
     align-items: center;
+    color:black;
 
     &:hover {
       text-decoration: underline;
@@ -84,7 +86,7 @@ export const SubMenuColumn = styled.div`
   }
 `;
 
-// ✨ 애니메이션이 적용된 제목 컴포넌트 (기존 h4 대체) ✨
+
 export const SubMenuTitle = styled.h4`
   font-size: 18px; 
   color: #212a2f;
@@ -120,7 +122,7 @@ export const SubMenuTitle = styled.h4`
   }
 `;
 
-// ✨ 애니메이션 제거된 일반 링크 ✨
+
 export const SubMenuLink = styled.a`
   text-decoration: none;
   color: #4a4a4a;
@@ -130,7 +132,7 @@ export const SubMenuLink = styled.a`
 
   &:hover {
     color: #212a2f;
-    text-decoration: underline; /* 심플하게 밑줄만 표시 */
+    text-decoration: underline; 
     text-underline-offset: 3px;
   }
 `;

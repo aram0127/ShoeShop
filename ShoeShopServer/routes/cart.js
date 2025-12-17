@@ -71,4 +71,35 @@ router.delete("/:productId/:size", (req, res) => {
   req.session.save(() => res.json(req.session.cart));
 });
 
+// 수량 변경 (PUT /api/cart)
+router.put("/", (req, res) => {
+  try {
+    const { productId, size, quantity } = req.body;
+    const cart = req.session.cart;
+
+    if (!cart) return res.json([]);
+
+    const itemIndex = cart.findIndex(
+      (item) => item.productId === productId && item.size === size
+    );
+
+    if (itemIndex > -1) {
+      if (quantity <= 0) {
+        // 수량이 0 이하면 삭제
+        cart.splice(itemIndex, 1);
+      } else {
+        // 수량 업데이트
+        cart[itemIndex].quantity = quantity;
+      }
+    }
+
+    req.session.save(() => {
+      res.json(req.session.cart);
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "수량 변경 오류" });
+  }
+});
+
 module.exports = router;

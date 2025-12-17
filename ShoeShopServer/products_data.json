@@ -1,867 +1,543 @@
-[{
-  "_id": {
-    "$oid": "6933281db13685b55993043a"
-  },
-  "name": "라이프 스타일 신발 1",
-  "description": "라이프 스타일 신발 1입니다.",
-  "price": 90000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    250,
-    285,
-    275,
-    280,
-    290,
-    260,
-    255
-  ],
-  "images": [
-    "lifestyle_1_1.jpg",
-    "lifestyle_1_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 304,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993043b"
-  },
-  "name": "라이프 스타일 신발 2",
-  "description": "라이프 스타일 신발 2입니다.",
-  "price": 130000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "canvas",
-  "availableSizes": [
-    250,
-    285,
-    275,
-    280,
-    295,
-    265,
-    300
-  ],
-  "images": [
-    "lifestyle_2_1.jpg",
-    "lifestyle_2_2.jpg"
-  ],
-  "discountRate": 17,
-  "salesCount": 375,
-  "createdAt": {
-    "$date": "2025-01-01T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993043c"
-  },
-  "name": "라이프 스타일 신발 3",
-  "description": "라이프 스타일 신발 3입니다.",
-  "price": 90000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "leather",
-  "availableSizes": [
-    260,
-    275,
-    280,
-    265
-  ],
-  "images": [
-    "lifestyle_3_1.jpg",
-    "lifestyle_3_2.jpg"
-  ],
-  "discountRate": 12,
-  "salesCount": 59,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993043d"
-  },
-  "name": "라이프 스타일 신발 4",
-  "description": "라이프 스타일 신발 4입니다.",
-  "price": 150000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    260,
-    275,
-    280,
-    255,
-    290,
-    285,
-    265,
-    270
-  ],
-  "images": [
-    "lifestyle_4_1.jpg",
-    "lifestyle_4_2.jpg"
-  ],
-  "discountRate": 13,
-  "salesCount": 494,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993043e"
-  },
-  "name": "라이프 스타일 신발 5",
-  "description": "라이프 스타일 신발 5입니다.",
-  "price": 90000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "canvas",
-  "availableSizes": [
-    260,
-    255,
-    275,
-    270,
-    250,
-    280,
-    300,
-    285
-  ],
-  "images": [
-    "lifestyle_5_1.jpg",
-    "lifestyle_5_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 238,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993043f"
-  },
-  "name": "라이프 스타일 신발 6",
-  "description": "라이프 스타일 신발 6입니다.",
-  "price": 100000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    260,
-    255,
-    275,
-    295
-  ],
-  "images": [
-    "lifestyle_6_1.jpg",
-    "lifestyle_6_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 430,
-  "createdAt": {
-    "$date": "2025-01-01T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930440"
-  },
-  "name": "라이프 스타일 신발 7",
-  "description": "라이프 스타일 신발 7입니다.",
-  "price": 140000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    280,
-    295,
-    255,
-    265,
-    300,
-    260,
-    290
-  ],
-  "images": [
-    "lifestyle_7_1.jpg",
-    "lifestyle_7_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 354,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930441"
-  },
-  "name": "라이프 스타일 신발 8",
-  "description": "라이프 스타일 신발 8입니다.",
-  "price": 150000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    265,
-    295,
-    260,
-    285,
-    250,
-    300
-  ],
-  "images": [
-    "lifestyle_8_1.jpg",
-    "lifestyle_8_2.jpg"
-  ],
-  "discountRate": 15,
-  "salesCount": 231,
-  "createdAt": {
-    "$date": "2025-01-01T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930442"
-  },
-  "name": "라이프 스타일 신발 9",
-  "description": "라이프 스타일 신발 9입니다.",
-  "price": 80000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "cotton",
-  "availableSizes": [
-    265,
-    295,
-    260,
-    255
-  ],
-  "images": [
-    "lifestyle_9_1.jpg",
-    "lifestyle_9_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 222,
-  "createdAt": {
-    "$date": "2025-01-01T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930443"
-  },
-  "name": "라이프 스타일 신발 10",
-  "description": "라이프 스타일 신발 10입니다.",
-  "price": 150000,
-  "categories": [
-    "lifestyle"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    290,
-    275,
-    255,
-    300,
-    265,
-    260,
-    250,
-    270
-  ],
-  "images": [
-    "lifestyle_10_1.jpg",
-    "lifestyle_10_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 124,
-  "createdAt": {
-    "$date": "2025-01-01T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930444"
-  },
-  "name": "슬립온 신발 1",
-  "description": "슬립온 신발 1입니다.",
-  "price": 80000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    285,
-    250,
-    280,
-    270,
-    295,
-    290
-  ],
-  "images": [
-    "slipon_1_1.jpg",
-    "slipon_1_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 947,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930445"
-  },
-  "name": "슬립온 신발 2",
-  "description": "슬립온 신발 2입니다.",
-  "price": 70000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    290,
-    280,
-    295,
-    300,
-    265,
-    260,
-    285,
-    250,
-    275
-  ],
-  "images": [
-    "slipon_2_1.jpg",
-    "slipon_2_2.jpg"
-  ],
-  "discountRate": 16,
-  "salesCount": 500,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930446"
-  },
-  "name": "슬립온 신발 3",
-  "description": "슬립온 신발 3입니다.",
-  "price": 80000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    295,
-    280,
-    285,
-    300
-  ],
-  "images": [
-    "slipon_3_1.jpg",
-    "slipon_3_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 726,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930447"
-  },
-  "name": "슬립온 신발 4",
-  "description": "슬립온 신발 4입니다.",
-  "price": 100000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    300,
-    285,
-    275,
-    260,
-    270,
-    290,
-    280,
-    250,
-    255,
-    295
-  ],
-  "images": [
-    "slipon_4_1.jpg",
-    "slipon_4_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 534,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930448"
-  },
-  "name": "슬립온 신발 5",
-  "description": "슬립온 신발 5입니다.",
-  "price": 110000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    260,
-    255,
-    265,
-    285
-  ],
-  "images": [
-    "slipon_5_1.jpg",
-    "slipon_5_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 584,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930449"
-  },
-  "name": "슬립온 신발 6",
-  "description": "슬립온 신발 6입니다.",
-  "price": 60000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    250,
-    260,
-    255,
-    265,
-    285,
-    290
-  ],
-  "images": [
-    "slipon_6_1.jpg",
-    "slipon_6_2.jpg"
-  ],
-  "discountRate": 21,
-  "salesCount": 753,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044a"
-  },
-  "name": "슬립온 신발 7",
-  "description": "슬립온 신발 7입니다.",
-  "price": 80000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    280,
-    290,
-    300,
-    295,
-    285,
-    265,
-    255
-  ],
-  "images": [
-    "slipon_7_1.jpg",
-    "slipon_7_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 655,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044b"
-  },
-  "name": "슬립온 신발 8",
-  "description": "슬립온 신발 8입니다.",
-  "price": 110000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    265,
-    285,
-    260,
-    270,
-    255,
-    295,
-    275
-  ],
-  "images": [
-    "slipon_8_1.jpg",
-    "slipon_8_2.jpg"
-  ],
-  "discountRate": 24,
-  "salesCount": 986,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044c"
-  },
-  "name": "슬립온 신발 9",
-  "description": "슬립온 신발 9입니다.",
-  "price": 100000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    260,
-    285,
-    280,
-    290,
-    295,
-    300,
-    250
-  ],
-  "images": [
-    "slipon_9_1.jpg",
-    "slipon_9_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 319,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044d"
-  },
-  "name": "슬립온 신발 10",
-  "description": "슬립온 신발 10입니다.",
-  "price": 90000,
-  "categories": [
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    265,
-    260,
-    255,
-    285,
-    250,
-    300,
-    275
-  ],
-  "images": [
-    "slipon_10_1.jpg",
-    "slipon_10_2.jpg"
-  ],
-  "discountRate": 18,
-  "salesCount": 829,
-  "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044e"
-  },
-  "name": "하이브리드 신발 1",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 1입니다.",
-  "price": 170000,
-  "categories": [
-    "lifestyle",
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    265,
-    275,
-    295,
-    260,
-    290,
-    280,
-    255,
-    300
-  ],
-  "images": [
-    "hybrid_1_1.jpg",
-    "hybrid_1_2.jpg"
-  ],
-  "discountRate": 19,
-  "salesCount": 787,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b55993044f"
-  },
-  "name": "하이브리드 신발 2",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 2입니다.",
-  "price": 100000,
-  "categories": [
-    "lifestyle",
-    "slipon"
-  ],
-  "materials": "tree",
-  "availableSizes": [
-    260,
-    270,
-    285,
-    280,
-    295
-  ],
-  "images": [
-    "hybrid_2_1.jpg",
-    "hybrid_2_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 159,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930450"
-  },
-  "name": "하이브리드 신발 3",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 3입니다.",
-  "price": 100000,
-  "categories": [
-    "lifestyle",
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    295,
-    270,
-    275,
-    260,
-    255,
-    250,
-    280
-  ],
-  "images": [
-    "hybrid_3_1.jpg",
-    "hybrid_3_2.jpg"
-  ],
-  "discountRate": 18,
-  "salesCount": 625,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930451"
-  },
-  "name": "하이브리드 신발 4",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 4입니다.",
-  "price": 150000,
-  "categories": [
-    "lifestyle",
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    265,
-    275,
-    270,
-    250,
-    255,
-    300,
-    260,
-    295,
-    285,
-    290,
-    280
-  ],
-  "images": [
-    "hybrid_4_1.jpg",
-    "hybrid_4_2.jpg"
-  ],
-  "discountRate": 0,
-  "salesCount": 367,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": null,
-  "saleEndDate": null,
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6933281db13685b559930452"
-  },
-  "name": "하이브리드 신발 5",
-  "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 5입니다.",
-  "price": 150000,
-  "categories": [
-    "lifestyle",
-    "slipon"
-  ],
-  "materials": "wool",
-  "availableSizes": [
-    300,
-    270,
-    265,
-    280,
-    260,
-    290,
-    255
-  ],
-  "images": [
-    "hybrid_5_1.jpg",
-    "hybrid_5_2.jpg"
-  ],
-  "discountRate": 14,
-  "salesCount": 420,
-  "createdAt": {
-    "$date": "2025-12-05T15:20:38.601Z"
-  },
-  "saleStartDate": {
-    "$date": "2025-10-01T00:00:00.000Z"
-  },
-  "saleEndDate": {
-    "$date": "2025-12-31T00:00:00.000Z"
-  },
-  "__v": 0
-}]
+[
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043a"
+    },
+    "name": "라이프 스타일 신발 1",
+    "description": "라이프 스타일 신발 1입니다.",
+    "price": 90000,
+    "categories": ["lifestyle"],
+    "material": "wool",
+    "availableSizes": [250, 285, 275, 280, 290, 260, 255],
+    "images": ["lifestyle_1_1.jpg", "lifestyle_1_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 304,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043b"
+    },
+    "name": "라이프 스타일 신발 2",
+    "description": "라이프 스타일 신발 2입니다.",
+    "price": 130000,
+    "categories": ["lifestyle"],
+    "material": "canvas",
+    "availableSizes": [250, 285, 275, 280, 295, 265, 300],
+    "images": ["lifestyle_2_1.jpg", "lifestyle_2_2.jpg"],
+    "discountRate": 17,
+    "salesCount": 375,
+    "createdAt": {
+      "$date": "2025-01-01T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043c"
+    },
+    "name": "라이프 스타일 신발 3",
+    "description": "라이프 스타일 신발 3입니다.",
+    "price": 90000,
+    "categories": ["lifestyle"],
+    "material": "leather",
+    "availableSizes": [260, 275, 280, 265],
+    "images": ["lifestyle_3_1.jpg", "lifestyle_3_2.jpg"],
+    "discountRate": 12,
+    "salesCount": 59,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043d"
+    },
+    "name": "라이프 스타일 신발 4",
+    "description": "라이프 스타일 신발 4입니다.",
+    "price": 150000,
+    "categories": ["lifestyle"],
+    "material": "wool",
+    "availableSizes": [260, 275, 280, 255, 290, 285, 265, 270],
+    "images": ["lifestyle_4_1.jpg", "lifestyle_4_2.jpg"],
+    "discountRate": 13,
+    "salesCount": 494,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043e"
+    },
+    "name": "라이프 스타일 신발 5",
+    "description": "라이프 스타일 신발 5입니다.",
+    "price": 90000,
+    "categories": ["lifestyle"],
+    "material": "canvas",
+    "availableSizes": [260, 255, 275, 270, 250, 280, 300, 285],
+    "images": ["lifestyle_5_1.jpg", "lifestyle_5_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 238,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993043f"
+    },
+    "name": "라이프 스타일 신발 6",
+    "description": "라이프 스타일 신발 6입니다.",
+    "price": 100000,
+    "categories": ["lifestyle"],
+    "material": "tree",
+    "availableSizes": [260, 255, 275, 295],
+    "images": ["lifestyle_6_1.jpg", "lifestyle_6_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 430,
+    "createdAt": {
+      "$date": "2025-01-01T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930440"
+    },
+    "name": "라이프 스타일 신발 7",
+    "description": "라이프 스타일 신발 7입니다.",
+    "price": 140000,
+    "categories": ["lifestyle"],
+    "material": "wool",
+    "availableSizes": [280, 295, 255, 265, 300, 260, 290],
+    "images": ["lifestyle_7_1.jpg", "lifestyle_7_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 354,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930441"
+    },
+    "name": "라이프 스타일 신발 8",
+    "description": "라이프 스타일 신발 8입니다.",
+    "price": 150000,
+    "categories": ["lifestyle"],
+    "material": "tree",
+    "availableSizes": [265, 295, 260, 285, 250, 300],
+    "images": ["lifestyle_8_1.jpg", "lifestyle_8_2.jpg"],
+    "discountRate": 15,
+    "salesCount": 231,
+    "createdAt": {
+      "$date": "2025-01-01T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930442"
+    },
+    "name": "라이프 스타일 신발 9",
+    "description": "라이프 스타일 신발 9입니다.",
+    "price": 80000,
+    "categories": ["lifestyle"],
+    "material": "cotton",
+    "availableSizes": [265, 295, 260, 255],
+    "images": ["lifestyle_9_1.jpg", "lifestyle_9_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 222,
+    "createdAt": {
+      "$date": "2025-01-01T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930443"
+    },
+    "name": "라이프 스타일 신발 10",
+    "description": "라이프 스타일 신발 10입니다.",
+    "price": 150000,
+    "categories": ["lifestyle"],
+    "material": "tree",
+    "availableSizes": [290, 275, 255, 300, 265, 260, 250, 270],
+    "images": ["lifestyle_10_1.jpg", "lifestyle_10_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 124,
+    "createdAt": {
+      "$date": "2025-01-01T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930444"
+    },
+    "name": "슬립온 신발 1",
+    "description": "슬립온 신발 1입니다.",
+    "price": 80000,
+    "categories": ["slipon"],
+    "material": "wool",
+    "availableSizes": [285, 250, 280, 270, 295, 290],
+    "images": ["slipon_1_1.jpg", "slipon_1_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 947,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930445"
+    },
+    "name": "슬립온 신발 2",
+    "description": "슬립온 신발 2입니다.",
+    "price": 70000,
+    "categories": ["slipon"],
+    "material": "tree",
+    "availableSizes": [290, 280, 295, 300, 265, 260, 285, 250, 275],
+    "images": ["slipon_2_1.jpg", "slipon_2_2.jpg"],
+    "discountRate": 16,
+    "salesCount": 500,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930446"
+    },
+    "name": "슬립온 신발 3",
+    "description": "슬립온 신발 3입니다.",
+    "price": 80000,
+    "categories": ["slipon"],
+    "material": "tree",
+    "availableSizes": [295, 280, 285, 300],
+    "images": ["slipon_3_1.jpg", "slipon_3_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 726,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930447"
+    },
+    "name": "슬립온 신발 4",
+    "description": "슬립온 신발 4입니다.",
+    "price": 100000,
+    "categories": ["slipon"],
+    "material": "wool",
+    "availableSizes": [300, 285, 275, 260, 270, 290, 280, 250, 255, 295],
+    "images": ["slipon_4_1.jpg", "slipon_4_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 534,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930448"
+    },
+    "name": "슬립온 신발 5",
+    "description": "슬립온 신발 5입니다.",
+    "price": 110000,
+    "categories": ["slipon"],
+    "material": "wool",
+    "availableSizes": [260, 255, 265, 285],
+    "images": ["slipon_5_1.jpg", "slipon_5_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 584,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930449"
+    },
+    "name": "슬립온 신발 6",
+    "description": "슬립온 신발 6입니다.",
+    "price": 60000,
+    "categories": ["slipon"],
+    "material": "tree",
+    "availableSizes": [250, 260, 255, 265, 285, 290],
+    "images": ["slipon_6_1.jpg", "slipon_6_2.jpg"],
+    "discountRate": 21,
+    "salesCount": 753,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044a"
+    },
+    "name": "슬립온 신발 7",
+    "description": "슬립온 신발 7입니다.",
+    "price": 80000,
+    "categories": ["slipon"],
+    "material": "tree",
+    "availableSizes": [280, 290, 300, 295, 285, 265, 255],
+    "images": ["slipon_7_1.jpg", "slipon_7_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 655,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044b"
+    },
+    "name": "슬립온 신발 8",
+    "description": "슬립온 신발 8입니다.",
+    "price": 110000,
+    "categories": ["slipon"],
+    "material": "wool",
+    "availableSizes": [265, 285, 260, 270, 255, 295, 275],
+    "images": ["slipon_8_1.jpg", "slipon_8_2.jpg"],
+    "discountRate": 24,
+    "salesCount": 986,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044c"
+    },
+    "name": "슬립온 신발 9",
+    "description": "슬립온 신발 9입니다.",
+    "price": 100000,
+    "categories": ["slipon"],
+    "material": "tree",
+    "availableSizes": [260, 285, 280, 290, 295, 300, 250],
+    "images": ["slipon_9_1.jpg", "slipon_9_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 319,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044d"
+    },
+    "name": "슬립온 신발 10",
+    "description": "슬립온 신발 10입니다.",
+    "price": 90000,
+    "categories": ["slipon"],
+    "material": "wool",
+    "availableSizes": [265, 260, 255, 285, 250, 300, 275],
+    "images": ["slipon_10_1.jpg", "slipon_10_2.jpg"],
+    "discountRate": 18,
+    "salesCount": 829,
+    "createdAt": {
+      "$date": "2025-05-20T00:00:00.000Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044e"
+    },
+    "name": "하이브리드 신발 1",
+    "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 1입니다.",
+    "price": 170000,
+    "categories": ["lifestyle", "slipon"],
+    "material": "tree",
+    "availableSizes": [265, 275, 295, 260, 290, 280, 255, 300],
+    "images": ["hybrid_1_1.jpg", "hybrid_1_2.jpg"],
+    "discountRate": 19,
+    "salesCount": 787,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b55993044f"
+    },
+    "name": "하이브리드 신발 2",
+    "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 2입니다.",
+    "price": 100000,
+    "categories": ["lifestyle", "slipon"],
+    "material": "tree",
+    "availableSizes": [260, 270, 285, 280, 295],
+    "images": ["hybrid_2_1.jpg", "hybrid_2_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 159,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930450"
+    },
+    "name": "하이브리드 신발 3",
+    "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 3입니다.",
+    "price": 100000,
+    "categories": ["lifestyle", "slipon"],
+    "material": "wool",
+    "availableSizes": [295, 270, 275, 260, 255, 250, 280],
+    "images": ["hybrid_3_1.jpg", "hybrid_3_2.jpg"],
+    "discountRate": 18,
+    "salesCount": 625,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930451"
+    },
+    "name": "하이브리드 신발 4",
+    "description": "라이프 스타일과 슬립온을 동시에 갖춘 신발 4입니다.",
+    "price": 150000,
+    "categories": ["lifestyle", "slipon"],
+    "material": "wool",
+    "availableSizes": [265, 275, 270, 250, 255, 300, 260, 295, 285, 290, 280],
+    "images": ["hybrid_4_1.jpg", "hybrid_4_2.jpg"],
+    "discountRate": 0,
+    "salesCount": 367,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": null,
+    "saleEndDate": null,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6933281db13685b559930452"
+    },
+    "price": 150000,
+    "material": "wool",
+    "availableSizes": [300, 270, 265, 280, 260, 290, 255],
+    "images": ["hybrid_5_1.jpg", "hybrid_5_2.jpg"],
+    "discountRate": 14,
+    "salesCount": 420,
+    "createdAt": {
+      "$date": "2025-12-05T15:20:38.601Z"
+    },
+    "saleStartDate": {
+      "$date": "2025-10-01T00:00:00.000Z"
+    },
+    "saleEndDate": {
+      "$date": "2025-12-31T00:00:00.000Z"
+    },
+    "__v": 0
+  }
+]

@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 // 상품 목록 조회 (GET /api/products)
 router.get("/", async (req, res) => {
   try {
-    const { category, materials, sizes, isNew, onSale } = req.query;
+    const { category, material, sizes, isNew, onSale } = req.query;
 
     // DB 쿼리 필터 객체 생성
     let filter = {};
@@ -16,8 +16,8 @@ router.get("/", async (req, res) => {
     }
 
     // [필터 2] 소재
-    if (materials) {
-      const materialList = materials.split(",");
+    if (material) {
+      const materialList = material.split(",");
       filter.material = { $in: materialList };
     }
 

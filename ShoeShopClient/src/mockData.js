@@ -338,18 +338,18 @@ export const mockFilters = {
     { value: "new_products", label: "신제품" },
     { value: "lifestyle", label: "라이프스타일" },
     { value: "sale", label: "세일" },
-    { value: "slip_on", label: "슬립온" },
-    { value: "best", label: "베스트" },
+    { value: "slipon", label: "슬립온" }, // <-- 'slip_on'을 'slipon'으로 수정
   ],
   sizes: [
     250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320,
   ].map((size) => ({ value: size.toString(), label: size.toString() })),
-  materials: [
-    { value: "나무 섬유", label: "가볍고 시원한 Tree" },
-    { value: "면", label: "면" },
-    { value: "울", label: "부드럽고 따뜻한 Wool" },
-    { value: "캔버스", label: "캔버스" },
-    { value: "사탕수수", label: "플라스틱 제로 식물성 가죽" },
+  material: [
+    // <-- value를 서버 DB enum 값으로 모두 수정
+    { value: "tree", label: "가볍고 시원한 Tree" },
+    { value: "cotton", label: "면" },
+    { value: "wool", label: "부드럽고 따뜻한 Wool" },
+    { value: "canvas", label: "캔버스" },
+    { value: "leather", label: "플라스틱 제로 식물성 가죽" },
   ],
   sortOptions: [
     { value: "recommend", label: "추천순" },

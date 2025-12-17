@@ -239,6 +239,7 @@ export const Newsletter = styled.div`
     border-radius: 6px;
     font-size: 14px;
     background-color: #fff;
+    color:black;
   }
 
   button {

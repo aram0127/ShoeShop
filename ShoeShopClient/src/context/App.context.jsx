@@ -11,11 +11,21 @@ export const AppProvider = ({ children }) => {
   const [orders, setOrders] = useState(mockOrders);
   const [cart, setCart] = useState([]);
 
-  // 사용자 정보 상태 (로그인 안 된 경우 null)
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 앱 로드 시 세션 확인 (새로고침 해도 로그인 유지)
+  // 장바구니 불러오기 함수
+  const fetchCart = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/cart", {
+        withCredentials: true,
+      });
+      setCart(response.data);
+    } catch (err) {
+      console.error("장바구니 불러오기 실패", err);
+    }
+  };
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -35,14 +45,14 @@ export const AppProvider = ({ children }) => {
       }
     };
     checkLoginStatus();
+    fetchCart(); // 앱 로드 시 장바구니 동기화
   }, []);
 
-  // 로그인 성공 시 상태 업데이트 함수
   const login = (userData) => {
     setUser(userData);
+    fetchCart(); // 로그인 시 장바구니 다시 불러오기
   };
 
-  // 로그아웃 함수
   const logout = async () => {
     try {
       await axios.post(
@@ -60,60 +70,89 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // 장바구니에 상품 추가 (8번 요구사항)
-  const addToCart = (product, size) => {
-    const itemInCart = cart.find(
-      (item) => item.productId === product.id && item.size === size
-    );
-    if (itemInCart) {
-      setCart(
-        cart.map((item) =>
-          item.productId === product.id && item.size === size
-            ? { ...item, quantity: item.quantity + 1 } // 수량만 증가시키고, 가격은 ProductDetail에서 전달받은 price로 업데이트 필요 (이 코드는 단순화)
-            : item
-        )
-      );
-    } else {
-      setCart([
-        ...cart,
+  // [수정] 장바구니에 상품 추가 (서버 연동)
+  const addToCart = async (product, size, quantity = 1) => {
+    try {
+      // 서버 API는 productId, size, quantity를 요구함
+      const response = await axios.post(
+        "http://localhost:3000/api/cart",
         {
-          id: Date.now(), // 고유 ID
-          productId: product.id,
-          name: product.name,
-          size: size,
-          quantity: 1,
-          price: product.salePrice, // 할인 적용된 가격
-          photo: product.photo,
+          productId: product._id || product.id, // ID 추출
+          size,
+          quantity,
         },
-      ]);
+        { withCredentials: true }
+      );
+      // 서버에서 업데이트된 장바구니 배열을 반환함
+      setCart(response.data);
+    } catch (err) {
+      console.error("장바구니 담기 실패:", err);
+      alert("장바구니에 상품을 담지 못했습니다.");
     }
   };
 
-  // 결제 및 주문 내역 추가 (9번 요구사항)
-  const checkout = () => {
+  // [수정] 결제 및 주문 내역 추가
+  const checkout = async () => {
     if (cart.length === 0) return false;
 
-    const newOrder = {
-      id: orders.length + 1,
-      date: new Date().toISOString(),
-      totalAmount: cart.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
-      products: cart.map((item) => ({
-        ...item,
-        status: "배송 준비 중",
-        isReviewed: false, // 10. 후기 상태 초기화
-      })),
-    };
+    try {
+      // 1. 주문 생성 (로컬 상태만 업데이트 - 추후 서버 주문 API 연동 필요)
+      const newOrder = {
+        id: orders.length + 1,
+        date: new Date().toISOString(),
+        totalAmount: cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        ),
+        products: cart.map((item) => ({
+          ...item,
+          status: "배송 준비 중",
+          isReviewed: false,
+        })),
+      };
+      setOrders((prev) => [newOrder, ...prev]);
 
-    setOrders((prev) => [newOrder, ...prev]);
-    setCart([]);
+      // 2. 서버 장바구니 비우기
+      await axios.delete("http://localhost:3000/api/cart", {
+        withCredentials: true,
+      });
+      setCart([]);
 
-    return true;
+      return true;
+    } catch (err) {
+      console.error("결제 처리 실패:", err);
+      alert("결제 처리에 실패했습니다.");
+      return false;
+    }
   };
 
-  // 리뷰 추가 (10번 요구사항)
+  // [추가] 수량 변경 함수
+  const updateQuantity = async (productId, size, newQuantity) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/cart",
+        { productId, size, quantity: newQuantity },
+        { withCredentials: true }
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.error("수량 변경 실패:", err);
+    }
+  };
+
+  // [추가] 개별 아이템 삭제 함수
+  const removeFromCart = async (productId, size) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/cart/${productId}/${size}`,
+        { withCredentials: true }
+      );
+      setCart(response.data);
+    } catch (err) {
+      console.error("아이템 삭제 실패:", err);
+    }
+  };
+
   const addReview = (productId, rating, content) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) => ({
@@ -137,6 +176,8 @@ export const AppProvider = ({ children }) => {
     cart,
     addToCart,
     checkout,
+    updateQuantity,
+    removeFromCart,
     addReview,
     setProducts,
     user,
